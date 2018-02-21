@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import ru.c0ner.babyplaner.R;
 
@@ -61,12 +63,17 @@ public class Budjet extends Fragment {
         }
 
 
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        String[] names = getResources().getStringArray(R.array.budjet_items_name);
+        ListView listView = (ListView) getView().findViewById(R.id.main_table);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.list_view, R.id.list_view_item_text, names);
+        listView.setAdapter(adapter);
         return inflater.inflate(R.layout.fragment_budjet, container, false);
     }
 
