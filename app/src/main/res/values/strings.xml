@@ -10,169 +10,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <string-array name="names">
-        <item>Аврора</item>
-        <item>Агата, Агафья</item>
-        <item>Агнесса</item>
-        <item>Агния</item>
-        <item>Ада</item>
-        <item>Аза</item>
-        <item>Алевтина</item>
-        <item>Александра</item>
-        <item>Алина</item>
-        <item>Алиса</item>
-        <item>Алла</item>
-        <item>Альбина</item>
-        <item>Альфреа</item>
-        <item>Анастасия</item>
-        <item>Ангелина</item>
-        <item>Анжелика, Анжела</item>
-        <item>Анита</item>
-        <item>Анна</item>
-        <item>Антонина</item>
-        <item>Анфиса</item>
-        <item>Арина</item>
-        <item>Астра</item>
-        <item>Беата</item>
-        <item>Белла</item>
-        <item>Берта</item>
-        <item>Бета</item>
-        <item>Богдана</item>
-        <item>Борислава</item>
-        <item>Бронислава</item>
-        <item>Валентина</item>
-        <item>Валерия</item>
-        <item>Ванда</item>
-        <item>Варвара</item>
-        <item>Василиса</item>
-        <item>Венера</item>
-        <item>Вера</item>
-        <item>Вероника</item>
-        <item>Веста</item>
-        <item>Виктория</item>
-        <item>Виолетта</item>
-        <item>Виталина, Виталия</item>
-        <item>Галина</item>
-        <item>Гелена</item>
-        <item>Гелла</item>
-        <item>Генриетта</item>
-        <item>Гертруда</item>
-        <item>Глафира</item>
-        <item>Глория</item>
-        <item>Дайна</item>
-        <item>Данута</item>
-        <item>Дарья</item>
-        <item>Джульета</item>
-        <item>Диана</item>
-        <item>Дина</item>
-        <item>Доля</item>
-        <item>Доминика</item>
-        <item>Ева</item>
-        <item>Евгения</item>
-        <item>Евдокия</item>
-        <item>Екатерина</item>
-        <item>Елена</item>
-        <item>Елизавета</item>
-        <item>Жанна</item>
-        <item>Зинаида</item>
-        <item>Зоя</item>
-        <item>Иветта</item>
-        <item>Изабелла</item>
-        <item>Изольда</item>
-        <item>Инара</item>
-        <item>Инга</item>
-        <item>Инесса</item>
-        <item>Инна</item>
-        <item>Ирина</item>
-        <item>Ирма</item>
-        <item>Ия</item>
-        <item>Камилла</item>
-        <item>Капитолина</item>
-        <item>Карина</item>
-        <item>Каролина</item>
-        <item>Катарина</item>
-        <item>Кира</item>
-        <item>Клавдия</item>
-        <item>Клара</item>
-        <item>Кристина</item>
-        <item>Ксения</item>
-        <item>Кузьма, Козьма</item>
-        <item>Лада</item>
-        <item>Лайма</item>
-        <item>Лариса</item>
-        <item>Леся</item>
-        <item>Лиана</item>
-        <item>Лидия</item>
-        <item>Лилия, Лилиана</item>
-        <item>Лина, Лиана</item>
-        <item>Лола, Лолла, Лолита</item>
-        <item>Людмила</item>
-        <item>Майя</item>
-        <item>Маргарита</item>
-        <item>Марианна</item>
-        <item>Марина</item>
-        <item>Мария</item>
-        <item>Марта</item>
-        <item>Марфа</item>
-        <item>Милена</item>
-        <item>Мирдза</item>
-        <item>Мирра</item>
-        <item>Муза</item>
-        <item>Надежда</item>
-        <item>Наталия</item>
-        <item>Неонила, Нила</item>
-        <item>Никита</item>
-        <item>Нина</item>
-        <item>Нонна</item>
-        <item>Нора</item>
-        <item>Оксана</item>
-        <item>Олеся</item>
-        <item>Ольга</item>
-        <item>Полина</item>
-        <item>Прасковья</item>
-        <item>Раиса</item>
-        <item>Регина, Рина</item>
-        <item>Рената</item>
-        <item>Римма</item>
-        <item>Роза, Розалия</item>
-        <item>Роксана</item>
-        <item>Руслана</item>
-        <item>Руфина</item>
-        <item>Савва</item>
-        <item>Сарра, Сара</item>
-        <item>Светлана</item>
-        <item>Серафима</item>
-        <item>София</item>
-        <item>Станислава</item>
-        <item>Стелла</item>
-        <item>Стефания</item>
-        <item>Сусанна, Сюзанна</item>
-        <item>Таира</item>
-        <item>Таисия</item>
-        <item>Тамара</item>
-        <item>Тамила, Томила</item>
-        <item>Татьяна</item>
-        <item>Ульяна</item>
-        <item>Фаина</item>
-        <item>Фекла</item>
-        <item>Флора</item>
-        <item>Фома</item>
-        <item>Франсуаза</item>
-        <item>Фрида</item>
-        <item>Христина</item>
-        <item>Эдита</item>
-        <item>Элеонора</item>
-        <item>Эллина, Эвелина, Элина</item>
-        <item>Эльвира</item>
-        <item>Эльза</item>
-        <item>Эмма, Эмилия</item>
-        <item>Эрика</item>
-        <item>Юлия</item>
-        <item>Юнона</item>
-        <item>Ядвига</item>
-        <item>Яна</item>
-        <item>Ярослава</item>
-    </string-array>
+
     <string-array name="budjet_items_name">
         <item>Аптечка</item>
         <item>Беременность</item>
@@ -186,5 +24,109 @@
         <item>Прогулки</item>
         <item>Роды</item>
         <item>Спальное место</item>
+    </string-array>
+
+    <string-array name="sumki">
+        <item>Документы в роддом</item>
+        <item>Сумка в родовой зал</item>
+        <item>Сумка на послеродовое отделение</item>
+        <item>Сумка на выписку из род. дома</item>
+        <item>Документы из роддома</item>
+    </string-array>
+    <string-array name="sumki_1">
+        <item>Паспорт + ксерокопия</item>
+        <item>Полис ОМС + ксерокопия</item>
+        <item>СНИЛС + ксерокопия</item>
+        <item>Родовой сертификат</item>
+        <item>Больничный лист</item>
+        <item>Обменная карта</item>
+        <item>Результаты анализов</item>
+        <item>Договор</item>
+        <item>Направление</item>
+        <item>Флюрография сопровождающего</item>
+    </string-array>
+
+    <string-array name="sumki_2">
+        <item>Халат</item>
+        <item>Ночная рубашка</item>
+        <item>Носки</item>
+        <item>Моющиеся тапочки</item>
+        <item>Туалетная бумага 1 рулон</item>
+        <item>Полотенце среднее</item>
+        <item>Пеленки одноразовые впитывающие</item>
+        <item>Вода без газа 1л</item>
+        <item>Вода термальная</item>
+        <item>Гигиеническая губная помада</item>
+        <item>Телефон</item>
+        <item>Зарядное устройство для телефона</item>
+        <item>Компрессионные чулки</item>
+    </string-array>
+
+    <string-array name="sumki_3">
+        <item>Расческа/щетка для волос</item>
+        <item>Шампунь, бальзам для волос</item>
+        <item>Фен</item>
+        <item>Дезодорант</item>
+        <item>Лосьоны/кремы</item>
+        <item>Косметика</item>
+        <item>Маникюрные принадлежности</item>
+        <item>Зубная щетка/паста/нить</item>
+        <item>Мыло для рук</item>
+        <item>Хозяйственное мыло</item>
+        <item>Полотенце для душа</item>
+        <item>Кружка</item>
+        <item>Ложка</item>
+        <item>Послеродовые прокладки (+памперсы)</item>
+        <item>Трусики сетчатые одноразовые</item>
+        <item>Пеленки одноразовые впитывающие 60х90, 60х60, 1-2 пачки</item>
+        <item>Прокладки для груди</item>
+        <item>Туалетная бумага 1 рулон</item>
+        <item>Бандаж послеродовый</item>
+        <item>Бюстгалтер для кормления</item>
+        <item>Памперсы детские 1 уп.</item>
+        <item>Влажные салфетки детские</item>
+        <item>Еда (йогурт, банан, батончики)</item>
+        <item>Крем "Бепантен"</item>
+    </string-array>
+
+    <string-array name="sumki_4">
+        <item>Одежда и обувь для мамы</item>
+        <item>Одежда для ребенка по сезону</item>
+        <item>Конверт/комбинезон</item>
+        <item>Автокресло</item>
+        <item>Фотоаппарат</item>
+    </string-array>
+
+    <string-array name="sumki_5">
+        <item>Справка о рождении</item>
+        <item>Обменная карта (детская часть)</item>
+        <item>Родовой сертификат </item>
+        <item>Прививочный сертификат</item>
+    </string-array>
+
+
+    <string-array name="budjet_rodi">
+        <item>Договор с род.домом</item>
+        <item>Консультации врача/акушера в род.доме</item>
+        <item>Доп.расходы к договору</item>
+    </string-array>
+
+    <string-array name="budjet_malish_gigiena">
+        <item>Подгузники одноразовые</item>
+        <item>Салфетки влажные детские</item>
+        <item>Одноразовые пеленки</item>
+        <item>Ватные диски</item>
+        <item>Ватные палочки детские</item>
+        <item>Детский крем увлажняющий</item>
+        <item>Крем под подгузник</item>
+        <item>Присыпка</item>
+        <item>Детское мыло</item>
+        <item>Детский шампунь</item>
+        <item>Пена для ванны</item>
+        <item>Губка-мочалка</item>
+        <item>Маникюрные ножницы детские</item>
+        <item>Расческа мягкая</item>
+        <item>Стиральный порошок детский</item>
+        <item>Кондиционер для белья</item>
     </string-array>
 </resources>

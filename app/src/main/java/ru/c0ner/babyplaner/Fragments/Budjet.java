@@ -7,8 +7,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import ru.c0ner.babyplaner.R;
 
@@ -29,6 +31,13 @@ public class Budjet extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    String[] names;
+    ListView listView;
+    ArrayAdapter adapter;
+    public final static String TAG = "BudjetTAG";
+
+
+
 
     private OnFragmentInteractionListener mListener;
 
@@ -69,12 +78,25 @@ public class Budjet extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+         View v = inflater.inflate(R.layout.fragment_budjet, container, false);
         // Inflate the layout for this fragment
-        String[] names = getResources().getStringArray(R.array.budjet_items_name);
-        ListView listView = (ListView) getView().findViewById(R.id.main_table);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.list_view, R.id.list_view_item_text, names);
-        listView.setAdapter(adapter);
-        return inflater.inflate(R.layout.fragment_budjet, container, false);
+       names = getResources().getStringArray(R.array.budjet_items_name);
+       listView = (ListView) v.findViewById(R.id.main_table);
+      ///
+       adapter = new ArrayAdapter<>(v.getContext(), R.layout.list_view, R.id.list_view_item_text, names);
+       listView.setOnItemClickListener( new AdapterView.OnItemClickListener() {
+           public void onItemClick(AdapterView parent, View v, int position, long id) {
+               // Do something in response to the click
+               String str = "Test";
+                ArrayAdapter t = (ArrayAdapter) parent.getAdapter();
+                str = t.getItem(position).toString();
+               Toast.makeText(v.getContext(), str, Toast.LENGTH_SHORT).show();
+           }
+       }
+       );
+       listView.setAdapter(adapter);
+
+        return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -87,12 +109,7 @@ public class Budjet extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
+
     }
 
     @Override

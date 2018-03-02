@@ -1,5 +1,9 @@
 package ru.c0ner.babyplaner;
 
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -14,10 +18,36 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
+
+import ru.c0ner.babyplaner.Fragments.Budjet;
+import ru.c0ner.babyplaner.Fragments.Setting;
+import ru.c0ner.babyplaner.Fragments.Sumki;
+import ru.c0ner.babyplaner.Fragments.SumkiItems;
 
 public class app_main extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener , Sumki.onItemSelectListiner {
 
+
+    Budjet budjet;
+    Setting mSetting;
+    Sumki mSumki;
+    SumkiItems mSumkiItems;
+    FragmentManager fm;
+
+    public  void ItemSelect (String s, int array_id)
+    {
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+        FragmentTransaction ft = fm.beginTransaction();
+       //if (fm.findFragmentByTag(mSumki.TAG) != null )
+       {
+           mSumkiItems.setItems(getResources().getStringArray(array_id));
+           mSumkiItems.setTitle(s);
+            ft.replace(R.id.main_conteyner, mSumkiItems);
+            ft.addToBackStack( mSumkiItems.TAG );
+    }
+        ft.commit();
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,13 +72,23 @@ public class app_main extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        String[] names = getResources().getStringArray(R.array.budjet_items_name);
-        ListView listView = (ListView) findViewById(R.id.main_table);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.list_view, R.id.list_view_item_text, names);
-        listView.setAdapter(adapter);
+
+        budjet = new Budjet();
+        mSetting = new Setting();
+        mSumki = new Sumki();
+        mSumkiItems = new SumkiItems();
+        fm = getSupportFragmentManager();
+
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.main_conteyner, budjet);
+        ft.commit();
+    }
 
     @Override
     public void onBackPressed() {
@@ -88,14 +128,24 @@ public class app_main extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_budjet) {
-            // Handle the camera action
-        } else if (id == R.id.nav_bugs) {
+        FragmentTransaction ft = fm.beginTransaction();
 
+        if (id == R.id.nav_budjet) {
+          if (fm.findFragmentByTag( budjet.TAG) == null ) {
+              // Handle the camera action
+              ft.replace(R.id.main_conteyner, budjet);
+              ft.addToBackStack( budjet.TAG );
+          }
+        } else if (id == R.id.nav_bugs) {
+            if (fm.findFragmentByTag(mSumki.TAG) == null ) {
+
+                ft.replace(R.id.main_conteyner, mSumki);
+                ft.addToBackStack(mSumki.TAG);
+            }
         } else if (id == R.id.nav_setting) {
 
         }
-
+        ft.commit();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
