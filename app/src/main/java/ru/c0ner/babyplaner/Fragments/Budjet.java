@@ -22,125 +22,47 @@ import ru.c0ner.babyplaner.R;
  * Use the {@link Budjet#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Budjet extends Fragment {
+public class Budjet extends babyFragment implements   AdapterView.OnItemClickListener {
 
-
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
     String[] names;
     ListView listView;
     ArrayAdapter adapter;
+    String mTitle;
     public final static String TAG = "BudjetTAG";
-    public final static  int[] mitemlist ={
-            R.array.budjet_1,R.array.budjet_2,
-            R.array.sumki_2,
-            R.array.sumki_3,
-            R.array.sumki_4,
-            R.array.sumki_5
-
+    public final static int[] mitemlist = {
+            R.array.budjet_1, R.array.budjet_2, R.array.budjet_3, R.array.budjet_4, R.array.budjet_5, R.array.budjet_6,
+            R.array.budjet_7, R.array.budjet_8, R.array.budjet_9, R.array.budjet_10, R.array.budjet_11, R.array.budjet_12,
     };
 
-
-
-
-    private OnFragmentInteractionListener mListener;
-
-    public Budjet() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Budjet.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static Budjet newInstance(String param1, String param2) {
-        Budjet fragment = new Budjet();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-
-
-
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-         View v = inflater.inflate(R.layout.fragment_budjet, container, false);
+        View v = inflater.inflate(R.layout.fragment_budjet, container, false);
         // Inflate the layout for this fragment
-       names = getResources().getStringArray(R.array.budjet_items_name);
-       listView = (ListView) v.findViewById(R.id.main_table);
-      ///
-       adapter = new ArrayAdapter<>(v.getContext(), R.layout.list_view, R.id.list_view_item_text, names);
-       listView.setOnItemClickListener( new AdapterView.OnItemClickListener() {
-           public void onItemClick(AdapterView parent, View v, int position, long id) {
-               // Do something in response to the click
-               String str = "Test";
-                ArrayAdapter t = (ArrayAdapter) parent.getAdapter();
-                str = t.getItem(position).toString();
-               Toast.makeText(v.getContext(), str, Toast.LENGTH_SHORT).show();
-           }
-       }
-       );
-       listView.setAdapter(adapter);
-
+        names = getResources().getStringArray(R.array.budjet_items_name);
+        listView = (ListView) v.findViewById(R.id.main_table);
+        ///
+        adapter = new ArrayAdapter<>(v.getContext(), R.layout.list_view, R.id.list_view_item_text, names);
+        listView.setOnItemClickListener(Budjet.this);
+        listView.setAdapter(adapter);
         return v;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
-    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
+    public void onItemClick(AdapterView parent, View v, int position, long id) {
+        // Do something in response to the click
+        String str = "Test";
+        ArrayAdapter t = (ArrayAdapter) parent.getAdapter();
+        str = t.getItem(position).toString();
+        //Toast.makeText(v.getContext(), str, Toast.LENGTH_SHORT).show();
+        mItemSelectListiner.ItemSelect( TAG,str , mitemlist[position]);
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+    public void setTitle(String title) {
+        mTitle = title;
     }
 }

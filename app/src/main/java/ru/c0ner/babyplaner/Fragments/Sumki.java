@@ -19,12 +19,13 @@ import ru.c0ner.babyplaner.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Sumki extends Fragment implements  AdapterView.OnItemClickListener {
+public class Sumki extends babyFragment implements  AdapterView.OnItemClickListener {
+//
+//    public interface onItemSelectListiner  {
+//        public void ItemSelect (String s, int array_id );
+//    }
+//    onItemSelectListiner mItemSelectListiner;
 
-    public interface onItemSelectListiner  {
-        public void ItemSelect (String s, int array_id );
-    }
-    onItemSelectListiner mItemSelectListiner;
     ListView mListView;
     String[] mItemsname;
     ArrayAdapter mArrayAdapter;
@@ -75,6 +76,6 @@ public class Sumki extends Fragment implements  AdapterView.OnItemClickListener 
         ArrayAdapter t = (ArrayAdapter) parent.getAdapter();
         str = t.getItem(position).toString();
         // Toast.makeText(v.getContext(), str, Toast.LENGTH_SHORT).show();
-        mItemSelectListiner.ItemSelect( str , mitemlist[position]);
+        mItemSelectListiner.ItemSelect( TAG,str , mitemlist[position]);
     }
 }

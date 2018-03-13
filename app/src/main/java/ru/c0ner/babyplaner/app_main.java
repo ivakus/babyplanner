@@ -21,31 +21,42 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import ru.c0ner.babyplaner.Fragments.Budjet;
+import ru.c0ner.babyplaner.Fragments.BudjetItems;
 import ru.c0ner.babyplaner.Fragments.Setting;
 import ru.c0ner.babyplaner.Fragments.Sumki;
 import ru.c0ner.babyplaner.Fragments.SumkiItems;
+import ru.c0ner.babyplaner.Fragments.babyFragment;
 
 public class app_main extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener , Sumki.onItemSelectListiner {
+        implements NavigationView.OnNavigationItemSelectedListener , babyFragment.onItemSelectListiner{
 
 
     Budjet budjet;
     Setting mSetting;
     Sumki mSumki;
     SumkiItems mSumkiItems;
+    BudjetItems mBudjetItems;
     FragmentManager fm;
 
-    public  void ItemSelect (String s, int array_id)
+    public  void ItemSelect (String fragmentTag, String s, int array_id)
     {
-        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+      Toast.makeText(this, fragmentTag, Toast.LENGTH_SHORT).show();
         FragmentTransaction ft = fm.beginTransaction();
-       //if (fm.findFragmentByTag(mSumki.TAG) != null )
-       {
+       if ( fragmentTag == mSumki.TAG ) {
+           Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
            mSumkiItems.setItems(getResources().getStringArray(array_id));
            mSumkiItems.setTitle(s);
-            ft.replace(R.id.main_conteyner, mSumkiItems);
-            ft.addToBackStack( mSumkiItems.TAG );
-    }
+           ft.replace(R.id.main_conteyner, mSumkiItems);
+           ft.addToBackStack(mSumkiItems.TAG);
+       };
+       if (fragmentTag == budjet.TAG) {
+           Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+           mBudjetItems.setItems(getResources().getStringArray(array_id));
+           mBudjetItems.setTitle(s);
+           ft.replace(R.id.main_conteyner, mBudjetItems);
+           ft.addToBackStack( mBudjetItems.TAG );
+       };
+
         ft.commit();
     }
     @Override
@@ -77,6 +88,7 @@ public class app_main extends AppCompatActivity
         mSetting = new Setting();
         mSumki = new Sumki();
         mSumkiItems = new SumkiItems();
+        mBudjetItems = new BudjetItems();
         fm = getSupportFragmentManager();
 
 

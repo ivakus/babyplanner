@@ -48,8 +48,128 @@
         <item>Курсы подготовки к родам </item>
     </string-array>
 
-
-
+    <string-array name="budjet_3">
+        <item>Аренда автомобиля</item>
+        <item>Комплект на выписку для малыша</item>
+        <item>Конверт на выписку</item>
+        <item>Украшение автомобиля</item>
+        <item>Фотоальбом</item>
+        <item>Фотограф на выписку</item>
+        <item>Фотосессия беременной (30 недель)</item>
+        <item>Фотосессия новорожденного (1 мес)</item>
+        <item>Фуршет дома для родственников</item>
+        <item>Цветы/шары на выписку</item>
+    </string-array>
+    <string-array name="budjet_4">
+        <item>Ватные диски</item>
+        <item>Ватные палочки детские</item>
+        <item>Губка-мочалка</item>
+        <item>Детский крем увлажняющий</item>
+        <item>Детское мыло</item>
+        <item>Кондиционер для белья детский</item>
+        <item>Крем под подгузник</item>
+        <item>Маникюрные ножницы детские</item>
+        <item>Одноразовые пеленки</item>
+        <item>Подгузники одноразовые (2-3уп.)</item>
+        <item>Присыпка</item>
+        <item>Расческа мягкая</item>
+        <item>Салфетки влажные детские</item>
+        <item>Стиральный порошок детский</item>
+    </string-array>
+    <string-array name="budjet_5">
+        <item>Компрессионные чулки для родов</item>
+        <item>Крем от растяжек на животе</item>
+        <item>Одноразовые пеленки впитывающие</item>
+        <item>Одноразовые трусы сетчатые</item>
+        <item>Послеродовые прокладки</item>
+        <item>Прокладки для груди</item>
+        <item>Скраб от растяжек на животе</item>
+    </string-array>
+    <string-array name="budjet_6">
+        <item>Бутылочка</item>
+        <item>Ершик для соски</item>
+        <item>Контейнер для пустышек</item>
+        <item>Контейнеры для заморозки молока</item>
+        <item>Ложка детская</item>
+        <item>Молокоотсос</item>
+        <item>Соски-пустышки</item>
+    </string-array>
+    <string-array name="budjet_7">
+        <item>Ванночка</item>
+        <item>Весы</item>
+        <item>Горка</item>
+        <item>Игрушки</item>
+        <item>Ковшик для воды</item>
+        <item>Круг для купания</item>
+        <item>Пеленальный стол складной</item>
+        <item>Полотенца махровые (3 шт)</item>
+        <item>Термометр для воды</item>
+    </string-array>
+    <string-array name="budjet_8">
+        <item>Боди на кнопочках (5шт)</item>
+        <item>Комбинезон легкий (5шт)</item>
+        <item>Комбинезон теплый (5шт)</item>
+        <item>Конверт для прогулок</item>
+        <item>Носочки теплые (5шт)</item>
+        <item>Носочки хлопок (10шт)</item>
+        <item>Пеленки из хлопка/ситца (10шт)</item>
+        <item>Пеленки фланелевые (10шт)</item>
+        <item>Рукавички (царапки) (2шт)</item>
+        <item>Шапочка легкая (2шт)</item>
+        <item>Шапочка теплая (2шт)</item>
+    </string-array>
+    <string-array name="budjet_9">
+        <item>Адаптер на ремень для беременных</item>
+        <item>Бандаж</item>
+        <item>Брюки для беременных</item>
+        <item>Бюстгалтер для беременных (2шт)</item>
+        <item>Бюстгалтер для кормящих (2шт)</item>
+        <item>Домашняя одежда для беременных</item>
+        <item>Колготки для беременных</item>
+        <item>Кофты для беременных</item>
+        <item>Кофты для кормящих</item>
+        <item>Обувь на плоском ходу широкая</item>
+        <item>Одежда для кормящих домашняя</item>
+        <item>Платья для беременных</item>
+        <item>Платья для кормящих</item>
+        <item>Подушка для беременных</item>
+        <item>Пуховик для беременных</item>
+    </string-array>
+    <string-array name="budjet_10">
+        <item>Автокресло</item>
+        <item>Дождевик</item>
+        <item>Замок для коляски</item>
+        <item>Коляска</item>
+        <item>Конверт меховой</item>
+        <item>Матрас в коляску</item>
+        <item>Музыкальный подвес/погремушка</item>
+        <item>Муфта для рук на коляску</item>
+        <item>Переноска</item>
+        <item>Плед в коляску</item>
+        <item>Сетка москитная</item>
+        <item>Слинг/кенгуру</item>
+        <item>Чехлы на колеса</item>
+    </string-array>
+    <string-array name="budjet_11">
+        <item>Договор с род.домом</item>
+        <item>Доп.расходы к договору</item>
+        <item>Консультации врача/акушера в род.доме</item>
+    </string-array>
+    <string-array name="budjet_12">
+        <item>Карман для кроватки</item>
+        <item>Клеенка на матрас (2шт)</item>
+        <item>Кроватка</item>
+        <item>Легкое одеяло </item>
+        <item>Матрас</item>
+        <item>Музыкальная карусель/Мобиль</item>
+        <item>Мягкие бортики для кроватки/бампер</item>
+        <item>Ночник</item>
+        <item>Пеленальный стол/комод</item>
+        <item>Покрывало</item>
+        <item>Постельное белье (3 комплекта)</item>
+        <item>Увлажнитель воздуха</item>
+        <item>Шезлонг для новорожденного</item>
+    </string-array>
 
     <string-array name="sumki">
         <item>Документы в роддом</item>
