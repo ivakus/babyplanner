@@ -3,8 +3,13 @@ package ru.c0ner.babyplaner.Fragments;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -46,6 +51,7 @@ public class Budjet extends babyFragment implements   AdapterView.OnItemClickLis
         adapter = new ArrayAdapter<>(v.getContext(), R.layout.list_view, R.id.list_view_item_text, names);
         listView.setOnItemClickListener(Budjet.this);
         listView.setAdapter(adapter);
+        registerForContextMenu(listView);
         return v;
     }
 
@@ -64,5 +70,27 @@ public class Budjet extends babyFragment implements   AdapterView.OnItemClickLis
 
     public void setTitle(String title) {
         mTitle = title;
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        //menu.add(Menu.NONE, 0, Menu.NONE, "Добавить");
+        //menu.add(Menu.NONE, 1, Menu.NONE, "Редактировать");
+        //menu.add(Menu.NONE, 2, Menu.NONE, "Удалить");
+
+        //Toast.makeText(this.getContext(), str, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        String str = "";
+        str = adapter.getItem(info.position).toString();
+        Toast.makeText(this.getContext(), str, Toast.LENGTH_SHORT).show();
+       // adapter.remove( (Object) adapter.getItem(info.position));
+       // this.adapter.notifyDataSetChanged();
+        return super.onContextItemSelected(item);
     }
 }
