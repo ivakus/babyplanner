@@ -12,6 +12,7 @@
         android:orientation="horizontal"
         android:paddingLeft="@dimen/activity_vertical_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
+        android:background="@color/colorTitle"
         android:id="@+id/linearLayout">
 
         <TextView
@@ -21,6 +22,7 @@
             android:layout_weight="1"
             android:paddingRight="@dimen/fab_margin"
             android:text="Состав сумок"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="20sp" />
 
 
@@ -32,8 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/linearLayout"
-        android:layout_marginTop="28dp">
+        android:layout_below="@+id/linearLayout">
 
 
     </ListView>

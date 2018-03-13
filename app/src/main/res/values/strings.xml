@@ -26,6 +26,31 @@
         <item>Спальное место</item>
     </string-array>
 
+    <string-array name="budjet_1">
+        <item>Аспиратор </item>
+        <item>Пипетка </item>
+        <item>Зеленка </item>
+        <item>Перекись водорода </item>
+        <item>Вата </item>
+        <item>Термометр </item>
+        <item>Ромашка сух. сбор </item>
+        <item>Череда сух. сбор </item>
+        <item>Прочее________________ </item>
+    </string-array>
+    <string-array name="budjet_2">
+        <item>Договор на ведение беременности </item>
+        <item>1 скрининг </item>
+        <item>2 скрининг </item>
+        <item>3 скрининг </item>
+        <item>Анализы  </item>
+        <item>Витамины </item>
+        <item>Медикаменты </item>
+        <item>Курсы подготовки к родам </item>
+    </string-array>
+
+
+
+
     <string-array name="sumki">
         <item>Документы в роддом</item>
         <item>Сумка в родовой зал</item>
@@ -105,28 +130,4 @@
     </string-array>
 
 
-    <string-array name="budjet_rodi">
-        <item>Договор с род.домом</item>
-        <item>Консультации врача/акушера в род.доме</item>
-        <item>Доп.расходы к договору</item>
-    </string-array>
-
-    <string-array name="budjet_malish_gigiena">
-        <item>Подгузники одноразовые</item>
-        <item>Салфетки влажные детские</item>
-        <item>Одноразовые пеленки</item>
-        <item>Ватные диски</item>
-        <item>Ватные палочки детские</item>
-        <item>Детский крем увлажняющий</item>
-        <item>Крем под подгузник</item>
-        <item>Присыпка</item>
-        <item>Детское мыло</item>
-        <item>Детский шампунь</item>
-        <item>Пена для ванны</item>
-        <item>Губка-мочалка</item>
-        <item>Маникюрные ножницы детские</item>
-        <item>Расческа мягкая</item>
-        <item>Стиральный порошок детский</item>
-        <item>Кондиционер для белья</item>
-    </string-array>
 </resources>

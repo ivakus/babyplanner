@@ -23,6 +23,9 @@ import ru.c0ner.babyplaner.R;
  * create an instance of this fragment.
  */
 public class Budjet extends Fragment {
+
+
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -35,6 +38,14 @@ public class Budjet extends Fragment {
     ListView listView;
     ArrayAdapter adapter;
     public final static String TAG = "BudjetTAG";
+    public final static  int[] mitemlist ={
+            R.array.budjet_1,R.array.budjet_2,
+            R.array.sumki_2,
+            R.array.sumki_3,
+            R.array.sumki_4,
+            R.array.sumki_5
+
+    };
 
 
 
