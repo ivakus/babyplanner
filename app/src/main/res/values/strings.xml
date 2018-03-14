@@ -9,6 +9,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="str_dialog_add_title">Добавить запись</string>
 
 
     <string-array name="budjet_items_name">

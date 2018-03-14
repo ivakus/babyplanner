@@ -28,10 +28,11 @@ import ru.c0ner.babyplaner.Fragments.BudjetItems;
 import ru.c0ner.babyplaner.Fragments.Setting;
 import ru.c0ner.babyplaner.Fragments.Sumki;
 import ru.c0ner.babyplaner.Fragments.SumkiItems;
+import ru.c0ner.babyplaner.Fragments.babyAddDialog;
 import ru.c0ner.babyplaner.Fragments.babyFragment;
 
 public class app_main extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener , babyFragment.onItemSelectListiner, FloatingActionButton.OnClickListener {
+        implements NavigationView.OnNavigationItemSelectedListener , babyFragment.onItemSelectListiner, FloatingActionButton.OnClickListener, babyAddDialog.babyDialogreturnListener {
 
     final String USER_NAME = "USER_NAME";
     final int isFirst = 0;
@@ -67,7 +68,10 @@ public class app_main extends AppCompatActivity
 
        ft.commit();
     }
-
+    public void babyDialogReturnItem (String s) {
+        babyFragment bf = (babyFragment) fm.findFragmentById(R.id.main_conteyner);
+        bf.addItem(s);
+    }
     protected void readSaveData (){
 
     }
@@ -85,10 +89,12 @@ public class app_main extends AppCompatActivity
     }
     @Override
     public void onClick(View v) {
-
-        Snackbar.make(v, "Добавить Элемент", Snackbar.LENGTH_LONG)
-                .setAction("Да", null).show();
-
+        if (v.getId() == R.id.fab ) {
+            babyFragment bf = (babyFragment) fm.findFragmentById(R.id.main_conteyner);
+            Toast.makeText(this, "111", Toast.LENGTH_SHORT).show();
+           // bf.addItem();
+            bf.dialogAdd();
+        }
     }
 
     @Override
@@ -145,7 +151,9 @@ public class app_main extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.menu_add) {
+            babyFragment bf = (babyFragment) fm.findFragmentById(R.id.main_conteyner);
+           bf.dialogAdd();
             return true;
         }
 

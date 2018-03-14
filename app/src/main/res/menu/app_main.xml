@@ -2,17 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/menu_add"
         android:orderInCategory="100"
         android:title="Добавить"
         app:showAsAction="never" />
     <item
-        android:id="@+id/action_settings1"
+        android:id="@+id/menu_edit"
         android:orderInCategory="100"
         android:title="Редактировать"
         app:showAsAction="never" />
     <item
-        android:id="@+id/action_settings2"
+        android:id="@+id/menu_del"
         android:orderInCategory="100"
         android:title="Удалить"
         app:showAsAction="never" />

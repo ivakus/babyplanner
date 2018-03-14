@@ -4,6 +4,7 @@ package ru.c0ner.babyplaner.Fragments;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -82,11 +83,34 @@ public class Sumki extends babyFragment implements  AdapterView.OnItemClickListe
     public boolean onContextItemSelected(MenuItem item) {
 
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        String str = "";
-        str = mAdapter.getItem(info.position).toString();
-        // Toast.makeText(this.getContext(), str, Toast.LENGTH_SHORT).show();
-        mAdapter.remove( info.position);
-        this.mAdapter.notifyDataSetChanged();
+
+        switch (item.getItemId()) {
+            case R.id.menu_add: {
+                dialogAdd();
+                break;
+            }
+            case R.id.menu_edit: {
+                break;
+            }
+            case R.id.menu_del: {
+                mAdapter.remove(info.position);
+                this.mAdapter.notifyDataSetChanged();
+                break;
+            }
+        }
+
         return super.onContextItemSelected(item);
+    }
+
+    public void dialogAdd(){
+        DialogFragment addDialog = new babyAddDialog();
+        addDialog.show(getFragmentManager(),"Add_Budjet");
+    }
+    public void addItem (String s)
+    {
+
+        Toast.makeText(this.getContext(),s, Toast.LENGTH_SHORT).show();
+        mAdapter.insert(s);
+        this.mAdapter.notifyDataSetChanged();
     }
 }

@@ -2,6 +2,7 @@ package ru.c0ner.babyplaner.Fragments;
 
 
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,11 +29,11 @@ public class BudjetItems extends babyFragment implements  AdapterView.OnItemClic
         mTitle = title;
     }
 
-    String [] mItems;
+    String[] mItems;
     babyAdapter mAdapter;
     ListView mListView;
     String mTitle;
-    public final static  String TAG = "BudjetitemsTAG";
+    public final static String TAG = "BudjetitemsTAG";
 
     public BudjetItems() {
         // Required empty public constructor
@@ -43,14 +44,14 @@ public class BudjetItems extends babyFragment implements  AdapterView.OnItemClic
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View v =inflater.inflate(R.layout.layout_budjetitems,container,false);
-        Log.d("Baby","Фрагмент BudjetItem создался ");
+        View v = inflater.inflate(R.layout.layout_budjetitems, container, false);
+        Log.d("Baby", "Фрагмент BudjetItem создался ");
         mListView = v.getRootView().findViewById(R.id.budjetitems_listview);
         TextView tw = v.findViewById(R.id.budjet_title);
         tw.setText(mTitle);
         // mItems = getResources().getStringArray(R.array.budjet_malish_gigiena);
-        mAdapter = new babyAdapter(v.getContext(),mItems);
-        mListView.setOnItemClickListener( BudjetItems.this );
+        mAdapter = new babyAdapter(v.getContext(), mItems);
+        mListView.setOnItemClickListener(BudjetItems.this);
         mListView.setAdapter(mAdapter);
         registerForContextMenu(mListView);
         return v;
@@ -66,13 +67,35 @@ public class BudjetItems extends babyFragment implements  AdapterView.OnItemClic
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        String str = "";
-        str = mAdapter.getItem(info.position).toString();
-        // Toast.makeText(this.getContext(), str, Toast.LENGTH_SHORT).show();
-        mAdapter.remove( info.position);
-        this.mAdapter.notifyDataSetChanged();
+
+        switch (item.getItemId()) {
+            case R.id.menu_add: {
+                dialogAdd();
+                break;
+            }
+            case R.id.menu_edit: {
+                break;
+            }
+            case R.id.menu_del: {
+                mAdapter.remove(info.position);
+                this.mAdapter.notifyDataSetChanged();
+                break;
+            }
+        }
+
         return super.onContextItemSelected(item);
     }
+    public void dialogAdd(){
+        DialogFragment addDialog = new babyAddDialog();
+        addDialog.show(getFragmentManager(),"Add_Budjet");
+    }
+    public void addItem (String s)
+    {
+
+        Toast.makeText(this.getContext(),s, Toast.LENGTH_SHORT).show();
+        mAdapter.insert(s);
+        this.mAdapter.notifyDataSetChanged();
+    }
+
 }

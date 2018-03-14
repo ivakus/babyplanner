@@ -10,6 +10,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import ru.c0ner.babyplaner.R;
+
 /**
  * Created by d.ivaka on 13.03.2018.
  */
@@ -43,9 +45,8 @@ public class babyFragment extends Fragment implements  AdapterView.OnItemClickLi
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        menu.add(Menu.NONE, 0, Menu.NONE, "Добавить");
-        menu.add(Menu.NONE, 1, Menu.NONE, "Редактировать");
-        menu.add(Menu.NONE, 2, Menu.NONE, "Удалить");
+        getActivity().getMenuInflater().inflate(R.menu.app_main,menu);
+
 
         //Toast.makeText(this.getContext(), str, Toast.LENGTH_SHORT).show();
     }
@@ -59,5 +60,11 @@ public class babyFragment extends Fragment implements  AdapterView.OnItemClickLi
         //Toast.makeText(this.getContext(), str, Toast.LENGTH_SHORT).show();
         return super.onContextItemSelected(item);
     }
+    public void addItem(String s)
+    {
+    }
+    public void dialogAdd ()
+    {
 
+    }
 }

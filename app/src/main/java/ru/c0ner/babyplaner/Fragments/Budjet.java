@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -24,7 +25,7 @@ public class Budjet extends babyFragment implements AdapterView.OnItemClickListe
 
     String[] names;
     ListView listView;
-   // ArrayAdapter adapter;
+    // ArrayAdapter adapter;
     babyAdapter mAdapter;
     String mTitle;
     public final static String TAG = "BudjetTAG";
@@ -43,7 +44,7 @@ public class Budjet extends babyFragment implements AdapterView.OnItemClickListe
         listView = (ListView) v.findViewById(R.id.main_table);
         ///
         //adapter = new ArrayAdapter<>(v.getContext(), R.layout.list_view, R.id.list_view_item_text, names);
-        mAdapter = new babyAdapter(this.getContext(),names);
+        mAdapter = new babyAdapter(this.getContext(), names);
         listView.setOnItemClickListener(Budjet.this);
         listView.setAdapter(mAdapter);
         registerForContextMenu(listView);
@@ -57,29 +58,45 @@ public class Budjet extends babyFragment implements AdapterView.OnItemClickListe
     public void onItemClick(AdapterView parent, View v, int position, long id) {
         // Do something in response to the click
         String str = "Test";
-       str = parent.getAdapter().getItem(position).toString();
-        mItemSelectListiner.ItemSelect( TAG,str , mitemlist[position]);
+        str = parent.getAdapter().getItem(position).toString();
+        mItemSelectListiner.ItemSelect(TAG, str, mitemlist[position]);
     }
 
     public void setTitle(String title) {
         mTitle = title;
     }
 
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-
-    }
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        String str = "";
-        str = mAdapter.getItem(info.position).toString();
-        // Toast.makeText(this.getContext(), str, Toast.LENGTH_SHORT).show();
-        mAdapter.remove( info.position);
-        this.mAdapter.notifyDataSetChanged();
+
+        switch (item.getItemId()) {
+            case R.id.menu_add: {
+                dialogAdd();
+                break;
+            }
+            case R.id.menu_edit: {
+                break;
+            }
+            case R.id.menu_del: {
+                mAdapter.remove(info.position);
+                this.mAdapter.notifyDataSetChanged();
+                break;
+            }
+        }
+
         return super.onContextItemSelected(item);
+    }
+    public void dialogAdd(){
+        DialogFragment addDialog = new babyAddDialog();
+        addDialog.show(getFragmentManager(),"Add_Budjet");
+    }
+    public void addItem (String s)
+    {
+
+        Toast.makeText(this.getContext(),s, Toast.LENGTH_SHORT).show();
+        mAdapter.insert(s);
+        this.mAdapter.notifyDataSetChanged();
     }
 }

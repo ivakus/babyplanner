@@ -70,6 +70,11 @@ public class babyAdapter extends BaseAdapter {
             mItems.remove(position);
             return true;
         }
+        public boolean insert (String s){
+
+            mItems.add(s);
+            return true;
+        }
 
 
 }
