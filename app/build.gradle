@@ -12,7 +12,7 @@ android {
     compileSdkVersion 26
     defaultConfig {
         applicationId "ru.c0ner.babyplaner"
-        minSdkVersion 19
+        minSdkVersion 15
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"

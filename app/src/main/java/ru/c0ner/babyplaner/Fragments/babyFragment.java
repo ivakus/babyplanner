@@ -2,6 +2,9 @@ package ru.c0ner.babyplaner.Fragments;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -13,10 +16,14 @@ import android.widget.Toast;
 
 public class babyFragment extends Fragment implements  AdapterView.OnItemClickListener {
 
+
+    //ArrayAdapter mAdapter;
+
     public interface onItemSelectListiner  {
         public void ItemSelect (String fragmentTag, String s, int array_id );
     }
     public onItemSelectListiner mItemSelectListiner;
+
 
     @Override
     public void onAttach(Context context) {
@@ -30,12 +37,27 @@ public class babyFragment extends Fragment implements  AdapterView.OnItemClickLi
     }
 
     public void onItemClick(AdapterView parent, View v, int position, long id) {
-        // Do something in response to the click
-       String str = "Baby Base Fragment ";
-       // ArrayAdapter t = (ArrayAdapter) parent.getAdapter();
-        //str = t.getItem(position).toString();
-        // Toast.makeText(v.getContext(), str, Toast.LENGTH_SHORT).show();
-       // mItemSelectListiner.ItemSelect( str , mitemlist[position]);
+
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.add(Menu.NONE, 0, Menu.NONE, "Добавить");
+        menu.add(Menu.NONE, 1, Menu.NONE, "Редактировать");
+        menu.add(Menu.NONE, 2, Menu.NONE, "Удалить");
+
+        //Toast.makeText(this.getContext(), str, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+
+        //AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        //String str = "";
+        //str = mAdapter.getItem(info.position).toString();
+        //Toast.makeText(this.getContext(), str, Toast.LENGTH_SHORT).show();
+        return super.onContextItemSelected(item);
     }
 
 }

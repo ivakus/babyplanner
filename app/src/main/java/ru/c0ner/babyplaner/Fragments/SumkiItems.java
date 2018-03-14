@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -18,14 +19,14 @@ import ru.c0ner.babyplaner.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SumkiItems extends Fragment implements  AdapterView.OnItemClickListener {
+public class SumkiItems extends babyFragment implements  AdapterView.OnItemClickListener {
 
     public void setItems(String[] items) {
         mItems = items;
     }
 
     String [] mItems;
-    ArrayAdapter mAdapter;
+    babyAdapter mAdapter;
     ListView mListView;
 
     public void setTitle(String title) {
@@ -49,20 +50,29 @@ public class SumkiItems extends Fragment implements  AdapterView.OnItemClickList
         mListView = v.getRootView().findViewById(R.id.sumki1_listview);
         TextView tw = v.findViewById(R.id.main_sum_title);
         tw.setText(mTitle);
-        // mItems = getResources().getStringArray(R.array.budjet_malish_gigiena);
-        mAdapter = new ArrayAdapter<>(v.getContext(),R.layout.list_view,R.id.list_view_item_text,mItems);
+        mAdapter = new babyAdapter(v.getContext(),mItems);
         mListView.setOnItemClickListener( SumkiItems.this );
         mListView.setAdapter(mAdapter);
+        registerForContextMenu(mListView);
         return v;
     }
 
     public void onItemClick(AdapterView parent, View v, int position, long id) {
         // Do something in response to the click
         String str = "Test";
-        ArrayAdapter t = (ArrayAdapter) parent.getAdapter();
-        str = t.getItem(position).toString();
+        str = parent.getAdapter().getItem(position).toString();
         Toast.makeText(v.getContext(), str, Toast.LENGTH_SHORT).show();
+    }
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
 
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        String str = "";
+        str = mAdapter.getItem(info.position).toString();
+        // Toast.makeText(this.getContext(), str, Toast.LENGTH_SHORT).show();
+        mAdapter.remove( info.position);
+        this.mAdapter.notifyDataSetChanged();
+        return super.onContextItemSelected(item);
     }
 
 }

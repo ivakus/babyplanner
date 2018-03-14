@@ -1,5 +1,6 @@
 package ru.c0ner.babyplaner;
 
+import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
@@ -18,6 +19,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import ru.c0ner.babyplaner.Fragments.Budjet;
@@ -28,8 +31,10 @@ import ru.c0ner.babyplaner.Fragments.SumkiItems;
 import ru.c0ner.babyplaner.Fragments.babyFragment;
 
 public class app_main extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener , babyFragment.onItemSelectListiner{
+        implements NavigationView.OnNavigationItemSelectedListener , babyFragment.onItemSelectListiner, FloatingActionButton.OnClickListener {
 
+    final String USER_NAME = "USER_NAME";
+    final int isFirst = 0;
 
     Budjet budjet;
     Setting mSetting;
@@ -37,52 +42,36 @@ public class app_main extends AppCompatActivity
     SumkiItems mSumkiItems;
     BudjetItems mBudjetItems;
     FragmentManager fm;
+    SharedPreferences mSaveData;
+    ProgressBar mMenu_progress;
+    TextView mDays_rodov;
 
     public  void ItemSelect (String fragmentTag, String s, int array_id)
     {
-      Toast.makeText(this, fragmentTag, Toast.LENGTH_SHORT).show();
-        FragmentTransaction ft = fm.beginTransaction();
-       if ( fragmentTag == mSumki.TAG ) {
-           Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+      //Toast.makeText(this, fragmentTag, Toast.LENGTH_SHORT).show();
+      FragmentTransaction ft = fm.beginTransaction();
+      if ( fragmentTag == mSumki.TAG ) {
+           //Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
            mSumkiItems.setItems(getResources().getStringArray(array_id));
            mSumkiItems.setTitle(s);
            ft.replace(R.id.main_conteyner, mSumkiItems);
            ft.addToBackStack(mSumkiItems.TAG);
-       };
-       if (fragmentTag == budjet.TAG) {
-           Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+      };
+      if (fragmentTag == budjet.TAG) {
+           //Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
            mBudjetItems.setItems(getResources().getStringArray(array_id));
            mBudjetItems.setTitle(s);
            ft.replace(R.id.main_conteyner, mBudjetItems);
            ft.addToBackStack( mBudjetItems.TAG );
-       };
+      };
 
-        ft.commit();
+       ft.commit();
     }
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_app_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+    protected void readSaveData (){
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+    }
+    protected void babyInit (){
 
         budjet = new Budjet();
         mSetting = new Setting();
@@ -90,13 +79,42 @@ public class app_main extends AppCompatActivity
         mSumkiItems = new SumkiItems();
         mBudjetItems = new BudjetItems();
         fm = getSupportFragmentManager();
+        mDays_rodov = findViewById(R.id.days_do_rodov);
+        mMenu_progress = findViewById(R.id.menu_progress);
 
+    }
+    @Override
+    public void onClick(View v) {
+
+        Snackbar.make(v, "Добавить Элемент", Snackbar.LENGTH_LONG)
+                .setAction("Да", null).show();
+
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_app_main);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(this);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        babyInit();
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        //mDays_rodov.setText(USER_NAME.toCharArray(),0,2);
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.main_conteyner, budjet);
         ft.commit();
@@ -139,7 +157,7 @@ public class app_main extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
+        // mDays_rodov.setText(USER_NAME);
         FragmentTransaction ft = fm.beginTransaction();
 
         if (id == R.id.nav_budjet) {

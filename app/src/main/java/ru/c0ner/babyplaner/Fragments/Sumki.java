@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -28,7 +29,8 @@ public class Sumki extends babyFragment implements  AdapterView.OnItemClickListe
 
     ListView mListView;
     String[] mItemsname;
-    ArrayAdapter mArrayAdapter;
+    babyAdapter mAdapter;
+
     public final static String TAG = "SumkiTAG";
     public final static  int[] mitemlist ={
             R.array.sumki_1,
@@ -61,11 +63,10 @@ public class Sumki extends babyFragment implements  AdapterView.OnItemClickListe
         View v = inflater.inflate(R.layout.layout_sumki,container,false);
         mListView = v.getRootView().findViewById(R.id.sumki_listview);
         mItemsname = getResources().getStringArray(R.array.sumki);
-        mArrayAdapter = new ArrayAdapter<>(v.getContext(),R.layout.list_view,R.id.list_view_item_text,mItemsname);
+        mAdapter = new babyAdapter(v.getContext(),mItemsname);
         mListView.setOnItemClickListener( Sumki.this );
-        mListView.setAdapter(mArrayAdapter);
-        // adapter = new ArrayAdapter<>(v.getContext(), R.layout.list_view, R.id.list_view_item_text, names);
-
+        mListView.setAdapter(mAdapter);
+        registerForContextMenu(mListView);
         return v;
     }
 
@@ -73,9 +74,19 @@ public class Sumki extends babyFragment implements  AdapterView.OnItemClickListe
     public void onItemClick(AdapterView parent, View v, int position, long id) {
         // Do something in response to the click
         String str = "Test";
-        ArrayAdapter t = (ArrayAdapter) parent.getAdapter();
-        str = t.getItem(position).toString();
-        // Toast.makeText(v.getContext(), str, Toast.LENGTH_SHORT).show();
+        str = parent.getAdapter().getItem(position).toString();
         mItemSelectListiner.ItemSelect( TAG,str , mitemlist[position]);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        String str = "";
+        str = mAdapter.getItem(info.position).toString();
+        // Toast.makeText(this.getContext(), str, Toast.LENGTH_SHORT).show();
+        mAdapter.remove( info.position);
+        this.mAdapter.notifyDataSetChanged();
+        return super.onContextItemSelected(item);
     }
 }

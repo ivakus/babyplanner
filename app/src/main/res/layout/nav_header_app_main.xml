@@ -88,7 +88,8 @@
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="left" />
+        android:layout_gravity="left"
+        android:id="@+id/menu_progress"/>
 
     <LinearLayout
         android:layout_width="match_parent"

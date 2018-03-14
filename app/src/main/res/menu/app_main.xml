@@ -7,12 +7,12 @@
         android:title="Добавить"
         app:showAsAction="never" />
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_settings1"
         android:orderInCategory="100"
         android:title="Редактировать"
         app:showAsAction="never" />
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_settings2"
         android:orderInCategory="100"
         android:title="Удалить"
         app:showAsAction="never" />
