@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import ru.c0ner.babyplaner.R;
@@ -22,13 +23,23 @@ import ru.c0ner.babyplaner.R;
 
 public class babyAddDialog extends DialogFragment implements DialogInterface.OnClickListener {
 
+
     public  interface babyDialogreturnListener {
         public void babyDialogReturnItem (String s);
     }
     babyDialogreturnListener mBabyDialogreturnListener ;
 
+    public void setTitle(String title) {
+        mTitle = title;
+    }
 
-    public String mItems;
+    public String mTitle;
+
+    public void setItems(String items) {
+        mItems = items;
+    }
+
+    public String mItems="";
     public EditText et;
 
     @Override
@@ -52,18 +63,25 @@ public class babyAddDialog extends DialogFragment implements DialogInterface.OnC
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
         View v = inflater.inflate(R.layout.add_dialog, null);
-        et = v.findViewById(R.id.dialog_add_title);
+        et = v.findViewById(R.id.dialog_add_edit);
+        TextView tw = v.findViewById(R.id.dialog_add_title);
+        tw.setText(mTitle);
+        if (mItems.length()>0){et.setText(mItems);}
         builder.setView(v);
-        builder.setPositiveButton(R.string.str_dialog_add_title,this);
+        // if (mTitle.length() > 0 ) {builder.setTitle(mTitle);}
+         //builder.setPositiveButton(R.string.str_dialog_add_edit,this);
+        builder.setNegativeButton(R.string.str_otmena,this);
+        builder.setPositiveButton(R.string.str_add,this);
         return builder.create();
     }
 
     @Override
     public void onClick(DialogInterface dialog, int which) {
-        mItems = et.getText().toString();
-        //Toast.makeText(this.getContext(),mItems, Toast.LENGTH_SHORT).show();
-        mBabyDialogreturnListener.babyDialogReturnItem(mItems);
+        if (which == Dialog.BUTTON_POSITIVE) {
+            mItems = et.getText().toString();
+            //Toast.makeText(this.getContext(),mItems, Toast.LENGTH_SHORT).show();
+            mBabyDialogreturnListener.babyDialogReturnItem(mItems);
+        }
     }
-
 
 }

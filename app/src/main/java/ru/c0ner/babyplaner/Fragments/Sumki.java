@@ -90,6 +90,7 @@ public class Sumki extends babyFragment implements  AdapterView.OnItemClickListe
                 break;
             }
             case R.id.menu_edit: {
+                dialogEdit(info.position);
                 break;
             }
             case R.id.menu_del: {
@@ -112,5 +113,12 @@ public class Sumki extends babyFragment implements  AdapterView.OnItemClickListe
         Toast.makeText(this.getContext(),s, Toast.LENGTH_SHORT).show();
         mAdapter.insert(s);
         this.mAdapter.notifyDataSetChanged();
+    }
+    public void dialogEdit(int position){
+        DialogFragment addDialog = new babyAddDialog();
+        ((babyAddDialog) addDialog).setTitle("Редактировать");
+        ((babyAddDialog) addDialog).setItems(mAdapter.getItem(position).toString());
+        addDialog.show(getFragmentManager(),"Edit_Budjet");
+
     }
 }

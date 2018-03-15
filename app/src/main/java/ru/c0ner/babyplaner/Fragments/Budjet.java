@@ -77,6 +77,7 @@ public class Budjet extends babyFragment implements AdapterView.OnItemClickListe
                 break;
             }
             case R.id.menu_edit: {
+                dialogEdit(info.position);
                 break;
             }
             case R.id.menu_del: {
@@ -90,13 +91,22 @@ public class Budjet extends babyFragment implements AdapterView.OnItemClickListe
     }
     public void dialogAdd(){
         DialogFragment addDialog = new babyAddDialog();
+        ((babyAddDialog) addDialog).setTitle("Добавить Элемент");
         addDialog.show(getFragmentManager(),"Add_Budjet");
+    }
+    public void dialogEdit(int position){
+        DialogFragment addDialog = new babyAddDialog();
+        ((babyAddDialog) addDialog).setTitle("Редактировать");
+        ((babyAddDialog) addDialog).setItems(mAdapter.getItem(position).toString());
+        addDialog.show(getFragmentManager(),"Edit_Budjet");
+
     }
     public void addItem (String s)
     {
 
-        Toast.makeText(this.getContext(),s, Toast.LENGTH_SHORT).show();
-        mAdapter.insert(s);
-        this.mAdapter.notifyDataSetChanged();
+         //   Toast.makeText(this.getContext(), s, Toast.LENGTH_SHORT).show();
+            mAdapter.insert(s);
+            this.mAdapter.notifyDataSetChanged();
+
     }
 }

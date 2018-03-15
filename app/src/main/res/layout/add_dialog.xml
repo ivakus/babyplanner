@@ -9,21 +9,28 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <ImageView
+
+        <TextView
+            android:id="@+id/dialog_add_title"
             android:layout_width="match_parent"
             android:layout_height="64dp"
-            android:scaleType="center"
             android:background="#FFFFBB33"
-            android:contentDescription="@string/app_name" />
+            android:gravity="center_vertical|center_horizontal"
+            android:text="Text"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+
+            android:textSize="20sp" />
+
         <EditText
-            android:id="@+id/dialog_add_title"
+            android:id="@+id/dialog_add_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginLeft="4dp"
             android:layout_marginRight="4dp"
             android:layout_marginBottom="4dp"
-            android:hint="@string/str_dialog_add_title" />
+
+            android:hint="@string/str_dialog_add_edit" />
 
     </LinearLayout>
 

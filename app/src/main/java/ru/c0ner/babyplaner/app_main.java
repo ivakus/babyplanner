@@ -1,13 +1,10 @@
 package ru.c0ner.babyplaner;
 
 import android.content.SharedPreferences;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -17,8 +14,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,13 +25,19 @@ import ru.c0ner.babyplaner.Fragments.Sumki;
 import ru.c0ner.babyplaner.Fragments.SumkiItems;
 import ru.c0ner.babyplaner.Fragments.babyAddDialog;
 import ru.c0ner.babyplaner.Fragments.babyFragment;
+import ru.c0ner.babyplaner.Fragments.babyStoradge;
 
 public class app_main extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener , babyFragment.onItemSelectListiner, FloatingActionButton.OnClickListener, babyAddDialog.babyDialogreturnListener {
 
+    final String STORADGE_NAME = "baby_v1";
     final String USER_NAME = "USER_NAME";
-    final int isFirst = 0;
+    final String FIRST_START = "FIRST_START";
+    boolean isFirst = true;
+    final String DAYS_RODOV = "DAYS_RODOV";
 
+    int days_rodov_int = 180;
+    String mUser_name = "Гость";
     Budjet budjet;
     Setting mSetting;
     Sumki mSumki;
@@ -46,6 +47,10 @@ public class app_main extends AppCompatActivity
     SharedPreferences mSaveData;
     ProgressBar mMenu_progress;
     TextView mDays_rodov;
+    babyStoradge mStor;
+    FloatingActionButton fab;
+
+
 
     public  void ItemSelect (String fragmentTag, String s, int array_id)
     {
@@ -73,26 +78,36 @@ public class app_main extends AppCompatActivity
         bf.addItem(s);
     }
     protected void readSaveData (){
+        mStor = new babyStoradge (getApplicationContext());
+        mSetting.mStor = mStor;
+        isFirst = mStor.getDataBoolean(FIRST_START);
+        if (isFirst){
+            // mStor.addData(FIRST_START,false);
 
+        }
+        mUser_name = mStor.getDataString(USER_NAME);
+        days_rodov_int = mStor.getDataInt(DAYS_RODOV);
+        Toast.makeText(getApplicationContext(), mUser_name, Toast.LENGTH_SHORT).show();
     }
     protected void babyInit (){
+
 
         budjet = new Budjet();
         mSetting = new Setting();
         mSumki = new Sumki();
         mSumkiItems = new SumkiItems();
         mBudjetItems = new BudjetItems();
+        mSetting = new Setting();
         fm = getSupportFragmentManager();
         mDays_rodov = findViewById(R.id.days_do_rodov);
         mMenu_progress = findViewById(R.id.menu_progress);
+        readSaveData();
 
     }
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.fab ) {
             babyFragment bf = (babyFragment) fm.findFragmentById(R.id.main_conteyner);
-            Toast.makeText(this, "111", Toast.LENGTH_SHORT).show();
-           // bf.addItem();
             bf.dialogAdd();
         }
     }
@@ -103,7 +118,7 @@ public class app_main extends AppCompatActivity
         setContentView(R.layout.activity_app_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(this);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -112,18 +127,27 @@ public class app_main extends AppCompatActivity
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
+     //   TextView user = (TextView) navigationView.findViewById(R.id.user_name);
+     //   user.setText(mUser_name);
         babyInit();
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        fab.setVisibility(View.VISIBLE);
         //mDays_rodov.setText(USER_NAME.toCharArray(),0,2);
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.main_conteyner, budjet);
         ft.commit();
+        if ( isFirst ) {
+            fab.setVisibility(View.INVISIBLE);
+            ft = fm.beginTransaction();
+            ft.replace(R.id.main_conteyner, mSetting);
+            ft.addToBackStack( mSetting.TAG );
+            ft.commit();
+        };
+
     }
 
     @Override
@@ -134,6 +158,7 @@ public class app_main extends AppCompatActivity
         } else {
             super.onBackPressed();
         }
+        fab.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -160,12 +185,13 @@ public class app_main extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
+
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         // mDays_rodov.setText(USER_NAME);
+        fab.setVisibility(View.VISIBLE);
         FragmentTransaction ft = fm.beginTransaction();
 
         if (id == R.id.nav_budjet) {
@@ -181,7 +207,9 @@ public class app_main extends AppCompatActivity
                 ft.addToBackStack(mSumki.TAG);
             }
         } else if (id == R.id.nav_setting) {
-
+            fab.setVisibility(View.INVISIBLE);
+            ft.replace(R.id.main_conteyner, mSetting);
+            ft.addToBackStack( mSetting.TAG );
         }
         ft.commit();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

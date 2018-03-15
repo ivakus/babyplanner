@@ -7,11 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-
 import java.util.ArrayList;
 import java.util.Collections;
-
 import ru.c0ner.babyplaner.R;
+
 
 /**
  * Created by d.ivaka on 14.03.2018.
@@ -20,17 +19,30 @@ import ru.c0ner.babyplaner.R;
 public class babyAdapter extends BaseAdapter {
 
 
-        Context context;
-        ArrayList mItems;
+        public Context context;
+        public ArrayList mItems;
 
         public static class ViewHolder {
             public TextView textView;
         }
 
+        public babyAdapter (Context context, babyItemBase[] list)
+        {
+            this.context = context;
+            mItems = new ArrayList <babyItemBase>();
+            Collections.addAll(mItems,list);
+        }
+
         public babyAdapter (Context context, String[] list) {
             this.context = context;
-            mItems = new ArrayList<>();
-            Collections.addAll(mItems, list);
+            mItems = new ArrayList<babyItemBase>();
+            for (int i=0;i<list.length;i++)
+            {
+                babyItemBase m = new babyItemBase(list[i]);
+                mItems.add(m);
+            }
+            // mItems = new ArrayList<>();
+            // Collections.addAll(mItems, list);
 
         }
 
@@ -41,7 +53,9 @@ public class babyAdapter extends BaseAdapter {
 
         @Override
         public Object getItem(int position) {
-            return mItems.get(position);
+
+            babyItemBase m = (babyItemBase) mItems.get(position);
+            return m.getTitle().toString();
         }
 
         @Override
@@ -71,9 +85,13 @@ public class babyAdapter extends BaseAdapter {
             return true;
         }
         public boolean insert (String s){
+            if (s.length() > 0 ) {
 
-            mItems.add(s);
-            return true;
+                babyItemBase item = new babyItemBase(s);
+                mItems.add(item);
+                return true;
+            }
+            return false;
         }
 
 

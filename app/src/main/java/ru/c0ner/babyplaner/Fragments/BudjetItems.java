@@ -30,7 +30,7 @@ public class BudjetItems extends babyFragment implements  AdapterView.OnItemClic
     }
 
     String[] mItems;
-    babyAdapter mAdapter;
+    babyBudjetItemAdapter mAdapter;
     ListView mListView;
     String mTitle;
     public final static String TAG = "BudjetitemsTAG";
@@ -50,7 +50,7 @@ public class BudjetItems extends babyFragment implements  AdapterView.OnItemClic
         TextView tw = v.findViewById(R.id.budjet_title);
         tw.setText(mTitle);
         // mItems = getResources().getStringArray(R.array.budjet_malish_gigiena);
-        mAdapter = new babyAdapter(v.getContext(), mItems);
+        mAdapter = new babyBudjetItemAdapter(v.getContext(), mItems);
         mListView.setOnItemClickListener(BudjetItems.this);
         mListView.setAdapter(mAdapter);
         registerForContextMenu(mListView);
@@ -75,6 +75,7 @@ public class BudjetItems extends babyFragment implements  AdapterView.OnItemClic
                 break;
             }
             case R.id.menu_edit: {
+                dialogEdit(info.position);
                 break;
             }
             case R.id.menu_del: {
@@ -97,5 +98,11 @@ public class BudjetItems extends babyFragment implements  AdapterView.OnItemClic
         mAdapter.insert(s);
         this.mAdapter.notifyDataSetChanged();
     }
+    public void dialogEdit(int position){
+        DialogFragment addDialog = new babyAddDialog();
+        ((babyAddDialog) addDialog).setTitle("Редактировать");
+        ((babyAddDialog) addDialog).setItems(mAdapter.getItem(position).toString());
+        addDialog.show(getFragmentManager(),"Edit_Budjet");
 
+    }
 }
