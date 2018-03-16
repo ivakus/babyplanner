@@ -44,9 +44,9 @@ public class app_main extends AppCompatActivity
     SumkiItems mSumkiItems;
     BudjetItems mBudjetItems;
     FragmentManager fm;
-    SharedPreferences mSaveData;
     ProgressBar mMenu_progress;
     TextView mDays_rodov;
+    TextView twUser_Name;
     babyStoradge mStor;
     FloatingActionButton fab;
 
@@ -77,9 +77,10 @@ public class app_main extends AppCompatActivity
         babyFragment bf = (babyFragment) fm.findFragmentById(R.id.main_conteyner);
         bf.addItem(s);
     }
+
     protected void readSaveData (){
         mStor = new babyStoradge (getApplicationContext());
-        mSetting.mStor = mStor;
+       // mSetting.mStor = mStor;
         isFirst = mStor.getDataBoolean(FIRST_START);
         if (isFirst){
             // mStor.addData(FIRST_START,false);
@@ -89,8 +90,12 @@ public class app_main extends AppCompatActivity
         days_rodov_int = mStor.getDataInt(DAYS_RODOV);
         Toast.makeText(getApplicationContext(), mUser_name, Toast.LENGTH_SHORT).show();
     }
+    protected void setUserinfo(){
+        twUser_Name.setText(mUser_name);
+        mDays_rodov.setText(""+days_rodov_int);
+        mMenu_progress.setProgress(days_rodov_int);
+    }
     protected void babyInit (){
-
 
         budjet = new Budjet();
         mSetting = new Setting();
@@ -99,8 +104,6 @@ public class app_main extends AppCompatActivity
         mBudjetItems = new BudjetItems();
         mSetting = new Setting();
         fm = getSupportFragmentManager();
-        mDays_rodov = findViewById(R.id.days_do_rodov);
-        mMenu_progress = findViewById(R.id.menu_progress);
         readSaveData();
 
     }
@@ -127,15 +130,19 @@ public class app_main extends AppCompatActivity
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-     //   TextView user = (TextView) navigationView.findViewById(R.id.user_name);
-     //   user.setText(mUser_name);
+        View header = (View) navigationView.getHeaderView(0);
+        twUser_Name = (TextView) header.findViewById(R.id.user_name);
+        mMenu_progress = (ProgressBar) header.findViewById(R.id.menu_progress);
+        mDays_rodov = (TextView) header.findViewById(R.id.days_do_rodov);
         babyInit();
+        //setUserinfo();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         fab.setVisibility(View.VISIBLE);
+        setUserinfo();
         //mDays_rodov.setText(USER_NAME.toCharArray(),0,2);
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.main_conteyner, budjet);

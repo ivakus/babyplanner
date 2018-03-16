@@ -2,16 +2,25 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     >
+
         <item
+
             android:id="@+id/nav_budjet"
+            android:icon="?android:attr/actionModePasteDrawable"
             android:title="Бюджет" />
         <item
-            android:id="@+id/nav_bugs"
-            android:title="Сумки" />
-        <item
-            android:id="@+id/nav_setting"
-            android:title="Настройки" />
 
+            android:id="@+id/nav_bugs"
+            android:icon="?android:attr/actionModeCopyDrawable"
+            android:title="Сумки" />
+
+        <group>
+                <item
+
+                    android:id="@+id/nav_setting"
+                    android:icon="@drawable/ic_menu_manage"
+                    android:title="Настройки" />
+        </group>
 
 
 </menu>
