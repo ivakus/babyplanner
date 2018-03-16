@@ -26,6 +26,7 @@ import ru.c0ner.babyplaner.Fragments.SumkiItems;
 import ru.c0ner.babyplaner.Fragments.babyAddDialog;
 import ru.c0ner.babyplaner.Fragments.babyFragment;
 import ru.c0ner.babyplaner.Fragments.babyStoradge;
+import ru.c0ner.babyplaner.Fragments.dialogDataReturn;
 
 public class app_main extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener , babyFragment.onItemSelectListiner, FloatingActionButton.OnClickListener, babyAddDialog.babyDialogreturnListener {
@@ -70,15 +71,23 @@ public class app_main extends AppCompatActivity
            ft.replace(R.id.main_conteyner, mBudjetItems);
            ft.addToBackStack( mBudjetItems.TAG );
       };
-
+      if (fragmentTag == mSetting.TAG ) {
+          readSaveData();
+          setUserinfo();
+      }
        ft.commit();
     }
-    public void babyDialogReturnItem (String s) {
+    public void babyDialogReturnItem (Object s) {
         babyFragment bf = (babyFragment) fm.findFragmentById(R.id.main_conteyner);
-        bf.addItem(s);
+        if (((dialogDataReturn) s).getPosition() == -1 ) {
+            bf.addItem(((dialogDataReturn) s).getTitle());
+        }
+        else {
+            bf.editItem( (dialogDataReturn) s ) ;
+        }
     }
 
-    protected void readSaveData (){
+    public void readSaveData (){
         mStor = new babyStoradge (getApplicationContext());
        // mSetting.mStor = mStor;
         isFirst = mStor.getDataBoolean(FIRST_START);
@@ -90,7 +99,7 @@ public class app_main extends AppCompatActivity
         days_rodov_int = mStor.getDataInt(DAYS_RODOV);
         Toast.makeText(getApplicationContext(), mUser_name, Toast.LENGTH_SHORT).show();
     }
-    protected void setUserinfo(){
+    public void setUserinfo(){
         twUser_Name.setText(mUser_name);
         mDays_rodov.setText(""+days_rodov_int);
         mMenu_progress.setProgress(days_rodov_int);
@@ -104,7 +113,7 @@ public class app_main extends AppCompatActivity
         mBudjetItems = new BudjetItems();
         mSetting = new Setting();
         fm = getSupportFragmentManager();
-        readSaveData();
+       // readSaveData();
 
     }
     @Override
@@ -136,6 +145,13 @@ public class app_main extends AppCompatActivity
         mDays_rodov = (TextView) header.findViewById(R.id.days_do_rodov);
         babyInit();
         //setUserinfo();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        readSaveData();
+        setUserinfo();
     }
 
     @Override
