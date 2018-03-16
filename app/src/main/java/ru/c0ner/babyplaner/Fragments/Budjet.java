@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -18,16 +19,22 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import ru.c0ner.babyplaner.R;
 
 
 public class Budjet extends babyFragment implements AdapterView.OnItemClickListener {
 
-    String[] names;
+
     ListView listView;
-    // ArrayAdapter adapter;
+
+
+
+    // ArrayList mItemList;
     babyAdapter mAdapter;
     String mTitle;
+
     public final static String TAG = "BudjetTAG";
     public final static int[] mitemlist = {
             R.array.budjet_1, R.array.budjet_2, R.array.budjet_3, R.array.budjet_4, R.array.budjet_5, R.array.budjet_6,
@@ -40,11 +47,12 @@ public class Budjet extends babyFragment implements AdapterView.OnItemClickListe
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_budjet, container, false);
         // Inflate the layout for this fragment
-        names = getResources().getStringArray(R.array.budjet_items_name);
+       // names = getResources().getStringArray(R.array.budjet_items_name);
         listView = (ListView) v.findViewById(R.id.main_table);
         ///
         //adapter = new ArrayAdapter<>(v.getContext(), R.layout.list_view, R.id.list_view_item_text, names);
-        mAdapter = new babyAdapter(this.getContext(), names);
+       // mAdapter = new babyAdapter(this.getContext(), names);
+        mAdapter = new babyAdapter(this.getContext(),mItemList);
         listView.setOnItemClickListener(Budjet.this);
         listView.setAdapter(mAdapter);
         registerForContextMenu(listView);
@@ -81,7 +89,8 @@ public class Budjet extends babyFragment implements AdapterView.OnItemClickListe
                 break;
             }
             case R.id.menu_del: {
-                mAdapter.remove(info.position);
+                remove(info.position);
+                //mAdapter.remove(info.position);
                 this.mAdapter.notifyDataSetChanged();
                 break;
             }
@@ -98,6 +107,7 @@ public class Budjet extends babyFragment implements AdapterView.OnItemClickListe
         DialogFragment addDialog = new babyAddDialog();
         ((babyAddDialog) addDialog).setTitle("Редактировать");
         ((babyAddDialog) addDialog).setItems(mAdapter.getItem(position).toString());
+        ((babyAddDialog) addDialog).setItemPosition(position);
         addDialog.show(getFragmentManager(),"Edit_Budjet");
 
     }
@@ -105,8 +115,14 @@ public class Budjet extends babyFragment implements AdapterView.OnItemClickListe
     {
 
          //   Toast.makeText(this.getContext(), s, Toast.LENGTH_SHORT).show();
-            mAdapter.insert(s);
+            super.addItem(s);
+            //mAdapter.insert(s);
             this.mAdapter.notifyDataSetChanged();
 
+    }
+    public void editItem (dialogDataReturn s){
+        super.editItem(s);
+      //  mAdapter.mItems.set(s.getPosition(),new babyItemBase(s.getTitle()));
+        this.mAdapter.notifyDataSetChanged();
     }
 }

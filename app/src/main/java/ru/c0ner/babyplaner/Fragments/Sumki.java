@@ -29,7 +29,6 @@ public class Sumki extends babyFragment implements  AdapterView.OnItemClickListe
 //    onItemSelectListiner mItemSelectListiner;
 
     ListView mListView;
-    String[] mItemsname;
     babyAdapter mAdapter;
 
     public final static String TAG = "SumkiTAG";
@@ -63,8 +62,8 @@ public class Sumki extends babyFragment implements  AdapterView.OnItemClickListe
 
         View v = inflater.inflate(R.layout.layout_sumki,container,false);
         mListView = v.getRootView().findViewById(R.id.sumki_listview);
-        mItemsname = getResources().getStringArray(R.array.sumki);
-        mAdapter = new babyAdapter(v.getContext(),mItemsname);
+       // mItemsname =
+        mAdapter = new babyAdapter(v.getContext(),mItemList);
         mListView.setOnItemClickListener( Sumki.this );
         mListView.setAdapter(mAdapter);
         registerForContextMenu(mListView);
@@ -105,7 +104,8 @@ public class Sumki extends babyFragment implements  AdapterView.OnItemClickListe
 
     public void dialogAdd(){
         DialogFragment addDialog = new babyAddDialog();
-        addDialog.show(getFragmentManager(),"Add_Budjet");
+        ((babyAddDialog) addDialog).setTitle("Добавить Элемент");
+        addDialog.show(getFragmentManager(),"Add_Sumki");
     }
     public void addItem (String s)
     {
@@ -118,7 +118,12 @@ public class Sumki extends babyFragment implements  AdapterView.OnItemClickListe
         DialogFragment addDialog = new babyAddDialog();
         ((babyAddDialog) addDialog).setTitle("Редактировать");
         ((babyAddDialog) addDialog).setItems(mAdapter.getItem(position).toString());
-        addDialog.show(getFragmentManager(),"Edit_Budjet");
+        ((babyAddDialog) addDialog).setItemPosition(position);
+        addDialog.show(getFragmentManager(),"Edit_Sumki");
 
+    }
+    public void editItem (dialogDataReturn s){
+        mAdapter.mItems.set(s.getPosition(),new babyItemBase(s.getTitle()));
+        this.mAdapter.notifyDataSetChanged();
     }
 }

@@ -6,6 +6,8 @@ package ru.c0ner.babyplaner.Fragments;
 
 public class babyItemBase {
     public String mTitle;
+    public int mParent;
+    public int mGroupID;
 
     public babyItemBase(String title) {
         mTitle = title;
@@ -33,7 +35,7 @@ public class babyItemBase {
         mParent = parent;
     }
 
-    public int mParent;
+
 
 
 

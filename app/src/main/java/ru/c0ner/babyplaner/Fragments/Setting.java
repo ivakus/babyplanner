@@ -12,14 +12,8 @@ import android.widget.EditText;
 
 import ru.c0ner.babyplaner.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link Setting.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link Setting#newInstance} factory method to
- * create an instance of this fragment.
- */
+
+
 public class Setting extends babyFragment implements Button.OnClickListener{
 
     final String STORADGE_NAME = "baby_v1";
@@ -44,7 +38,7 @@ public class Setting extends babyFragment implements Button.OnClickListener{
         mDay_do_rodov = (EditText) v.getRootView().findViewById(R.id.setting_day_do_rodov);
         Button btn = (Button) v.getRootView().findViewById(R.id.settings_save);
         btn.setOnClickListener(this);
-        //mStor = new babyStoradge (getContext());
+        mStor = new babyStoradge (getContext());
         ReadData();
         return v;
     }
@@ -76,6 +70,8 @@ public class Setting extends babyFragment implements Button.OnClickListener{
                 mUser_name = mUsername.getText().toString();
                 mDay = Integer.parseInt(mDay_do_rodov.getText().toString());
                 SaveDada();
+                mItemSelectListiner.ItemSelect(TAG, "Setting", 0);
+
         }
     }
 }

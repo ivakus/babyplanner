@@ -29,7 +29,7 @@ public class babyBudjetItemAdapter extends babyAdapter {
 
 
 
-   public babyBudjetItemAdapter (Context context, babyItemBase[] list) {
+   public babyBudjetItemAdapter (Context context, ArrayList list) {
         super (context,list);
     }
   public babyBudjetItemAdapter (Context context, String[] list) {

@@ -10,6 +10,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import ru.c0ner.babyplaner.R;
 
 /**
@@ -19,13 +21,17 @@ import ru.c0ner.babyplaner.R;
 public class babyFragment extends Fragment implements  AdapterView.OnItemClickListener {
 
 
-    //ArrayAdapter mAdapter;
+     ArrayList mItemList;
 
     public interface onItemSelectListiner  {
         public void ItemSelect (String fragmentTag, String s, int array_id );
     }
     public onItemSelectListiner mItemSelectListiner;
 
+    public babyFragment() {
+        super();
+        mItemList = new ArrayList();
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -60,11 +66,23 @@ public class babyFragment extends Fragment implements  AdapterView.OnItemClickLi
         //Toast.makeText(this.getContext(), str, Toast.LENGTH_SHORT).show();
         return super.onContextItemSelected(item);
     }
+    public void remove (int position){
+        mItemList.remove(position);
+    }
     public void addItem(String s)
     {
+        babyItemBase m = new babyItemBase(s);
+        mItemList.add(m);
     }
     public void dialogAdd ()
     {
 
+    }
+    public void editItem (dialogDataReturn s){
+        mItemList.set(s.getPosition(),new babyItemBase(s.getTitle()));
+    }
+
+    public void setItemList(ArrayList list) {
+        mItemList = list;
     }
 }

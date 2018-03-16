@@ -90,7 +90,8 @@ public class SumkiItems extends babyFragment implements  AdapterView.OnItemClick
     }
     public void dialogAdd(){
         DialogFragment addDialog = new babyAddDialog();
-        addDialog.show(getFragmentManager(),"Add_Budjet");
+        ((babyAddDialog) addDialog).setTitle("Добавить Элемент");
+        addDialog.show(getFragmentManager(),"Add_Sumkiitem");
     }
     public void addItem (String s)
     {
@@ -104,7 +105,13 @@ public class SumkiItems extends babyFragment implements  AdapterView.OnItemClick
         DialogFragment addDialog = new babyAddDialog();
         ((babyAddDialog) addDialog).setTitle("Редактировать");
         ((babyAddDialog) addDialog).setItems(mAdapter.getItem(position).toString());
-        addDialog.show(getFragmentManager(),"Edit_Budjet");
+        ((babyAddDialog) addDialog).setItemPosition(position);
+        addDialog.show(getFragmentManager(),"Edit_SumkiItem");
 
+    }
+
+    public void editItem (dialogDataReturn s){
+        mAdapter.mItems.set(s.getPosition(),new babyItemBase(s.getTitle()));
+        this.mAdapter.notifyDataSetChanged();
     }
 }

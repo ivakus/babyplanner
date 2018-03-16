@@ -27,6 +27,7 @@ import ru.c0ner.babyplaner.Fragments.babyAddDialog;
 import ru.c0ner.babyplaner.Fragments.babyFragment;
 import ru.c0ner.babyplaner.Fragments.babyStoradge;
 import ru.c0ner.babyplaner.Fragments.dialogDataReturn;
+import ru.c0ner.babyplaner.base.babyDataSet;
 
 public class app_main extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener , babyFragment.onItemSelectListiner, FloatingActionButton.OnClickListener, babyAddDialog.babyDialogreturnListener {
@@ -50,6 +51,7 @@ public class app_main extends AppCompatActivity
     TextView twUser_Name;
     babyStoradge mStor;
     FloatingActionButton fab;
+    babyDataSet mBabyDataSet;
 
 
 
@@ -68,6 +70,7 @@ public class app_main extends AppCompatActivity
            //Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
            mBudjetItems.setItems(getResources().getStringArray(array_id));
            mBudjetItems.setTitle(s);
+           //mBudjetItems.setItemList(mBabyDataSet.getBudjetItemList(array_id));
            ft.replace(R.id.main_conteyner, mBudjetItems);
            ft.addToBackStack( mBudjetItems.TAG );
       };
@@ -93,12 +96,35 @@ public class app_main extends AppCompatActivity
         isFirst = mStor.getDataBoolean(FIRST_START);
         if (isFirst){
             // mStor.addData(FIRST_START,false);
+            CreateDataSet();
+           // createSQLBase();
 
         }
         mUser_name = mStor.getDataString(USER_NAME);
         days_rodov_int = mStor.getDataInt(DAYS_RODOV);
         Toast.makeText(getApplicationContext(), mUser_name, Toast.LENGTH_SHORT).show();
     }
+
+    private void CreateDataSet() {
+        int[] mitemlist_budjet = {
+                R.array.budjet_1, R.array.budjet_2, R.array.budjet_3, R.array.budjet_4, R.array.budjet_5, R.array.budjet_6,
+                R.array.budjet_7, R.array.budjet_8, R.array.budjet_9, R.array.budjet_10, R.array.budjet_11, R.array.budjet_12,
+        };
+        mBabyDataSet = babyDataSet.get(getApplicationContext());
+        mBabyDataSet.setBudjetList(getResources().getStringArray(R.array.budjet_items_name));
+        mBabyDataSet.setSumkiList(getResources().getStringArray(R.array.sumki));
+        mSumki.setItemList(mBabyDataSet.getSumkiList());
+        budjet.setItemList(mBabyDataSet.getBudjetList());
+        for (int i =0 ; i < mitemlist_budjet.length; i++ ){
+            mBabyDataSet.setBudjetItemsList(getResources().getStringArray(mitemlist_budjet[i]),i);
+        }
+
+    }
+
+    private void createSQLBase() {
+
+    }
+
     public void setUserinfo(){
         twUser_Name.setText(mUser_name);
         mDays_rodov.setText(""+days_rodov_int);
@@ -114,6 +140,7 @@ public class app_main extends AppCompatActivity
         mSetting = new Setting();
         fm = getSupportFragmentManager();
        // readSaveData();
+        CreateDataSet();
 
     }
     @Override

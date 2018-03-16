@@ -26,11 +26,12 @@ public class babyAdapter extends BaseAdapter {
             public TextView textView;
         }
 
-        public babyAdapter (Context context, babyItemBase[] list)
+        public babyAdapter (Context context, ArrayList  list)
         {
             this.context = context;
             mItems = new ArrayList <babyItemBase>();
-            Collections.addAll(mItems,list);
+            //Collections.addAll(mItems,list);
+            mItems = list;
         }
 
         public babyAdapter (Context context, String[] list) {
