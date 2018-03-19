@@ -53,7 +53,10 @@ public class babyBudjetItemAdapter extends babyAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        String str = (String) getItem(position);
+
+        babyItemBase m = (babyItemBase) getItem(position);
+        String str = (String) m.getTitle().toString();
+
         ViewHolderBudjet holder;
         if (convertView == null) {
             convertView = LayoutInflater.from(super.context).inflate(R.layout.item_budjet, parent, false);

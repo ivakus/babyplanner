@@ -29,17 +29,9 @@ public class Sumki extends babyFragment implements  AdapterView.OnItemClickListe
 //    onItemSelectListiner mItemSelectListiner;
 
     ListView mListView;
-    babyAdapter mAdapter;
+    // babyAdapter mAdapter;
 
     public final static String TAG = "SumkiTAG";
-    public final static  int[] mitemlist ={
-            R.array.sumki_1,
-            R.array.sumki_2,
-            R.array.sumki_3,
-            R.array.sumki_4,
-            R.array.sumki_5
-
-    };
 
     public Sumki() {
         // Required empty public constructor
@@ -74,8 +66,12 @@ public class Sumki extends babyFragment implements  AdapterView.OnItemClickListe
     public void onItemClick(AdapterView parent, View v, int position, long id) {
         // Do something in response to the click
         String str = "Test";
-        str = parent.getAdapter().getItem(position).toString();
-        mItemSelectListiner.ItemSelect( TAG,str , mitemlist[position]);
+        //str = parent.getAdapter().getItem(position).toString();
+
+        babyItemBase m = (babyItemBase) parent.getAdapter().getItem(position);
+        str = m.getTitle().toString();
+        int Group_ID = m.mGroupID;
+        mItemSelectListiner.ItemSelect( TAG,str , Group_ID);
     }
 
     @Override
@@ -109,9 +105,9 @@ public class Sumki extends babyFragment implements  AdapterView.OnItemClickListe
     }
     public void addItem (String s)
     {
-
-        Toast.makeText(this.getContext(),s, Toast.LENGTH_SHORT).show();
-        mAdapter.insert(s);
+        //Toast.makeText(this.getContext(),s, Toast.LENGTH_SHORT).show();
+        //super.addItem(s);
+        // mAdapter.insert(s);
         this.mAdapter.notifyDataSetChanged();
     }
     public void dialogEdit(int position){
@@ -125,5 +121,8 @@ public class Sumki extends babyFragment implements  AdapterView.OnItemClickListe
     public void editItem (dialogDataReturn s){
         mAdapter.mItems.set(s.getPosition(),new babyItemBase(s.getTitle()));
         this.mAdapter.notifyDataSetChanged();
+    }
+    public String getTAG (){
+        return  TAG;
     }
 }

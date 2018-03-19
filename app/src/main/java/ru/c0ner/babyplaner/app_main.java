@@ -60,17 +60,20 @@ public class app_main extends AppCompatActivity
       //Toast.makeText(this, fragmentTag, Toast.LENGTH_SHORT).show();
       FragmentTransaction ft = fm.beginTransaction();
       if ( fragmentTag == mSumki.TAG ) {
-           //Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
-           mSumkiItems.setItems(getResources().getStringArray(array_id));
+          // Toast.makeText(this, "SumkiItems", Toast.LENGTH_SHORT).show();
+           //mSumkiItems.setItems(getResources().getStringArray(array_id));
+           mSumkiItems.setCurent_Group_ID(array_id);
+           mSumkiItems.setItemList(mBabyDataSet.getSumkiItems(array_id));
            mSumkiItems.setTitle(s);
            ft.replace(R.id.main_conteyner, mSumkiItems);
            ft.addToBackStack(mSumkiItems.TAG);
       };
       if (fragmentTag == budjet.TAG) {
            //Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
-           mBudjetItems.setItems(getResources().getStringArray(array_id));
+           //mBudjetItems.setItems(getResources().getStringArray(array_id));
+           mBudjetItems.setCurent_Group_ID(array_id);
            mBudjetItems.setTitle(s);
-           //mBudjetItems.setItemList(mBabyDataSet.getBudjetItemList(array_id));
+           mBudjetItems.setItemList(mBabyDataSet.getBudjetItemList(array_id));
            ft.replace(R.id.main_conteyner, mBudjetItems);
            ft.addToBackStack( mBudjetItems.TAG );
       };
@@ -83,11 +86,34 @@ public class app_main extends AppCompatActivity
     public void babyDialogReturnItem (Object s) {
         babyFragment bf = (babyFragment) fm.findFragmentById(R.id.main_conteyner);
         if (((dialogDataReturn) s).getPosition() == -1 ) {
-            bf.addItem(((dialogDataReturn) s).getTitle());
+            switch (bf.getTAG()) {
+                case Budjet.TAG: {
+                    mBabyDataSet.addBudjetList(((dialogDataReturn) s).getTitle());
+                    break;
+                }
+                case Sumki.TAG: {
+                    //Toast.makeText(this.getContext(),s, Toast.LENGTH_SHORT).show();
+                    mBabyDataSet.addSumkiList(((dialogDataReturn) s).getTitle());
+                    break;
+                }
+                case BudjetItems.TAG: {
+                    // String str = ""+ ((dialogDataReturn)s).getTitle() + ((BudjetItems) bf).getCurent_Group_ID();
+                    // Toast.makeText(this,str, Toast.LENGTH_SHORT).show();
+                    mBabyDataSet.addBudjetItem(((dialogDataReturn) s).getTitle(), ((BudjetItems) bf).getCurent_Group_ID());
+                    bf.addItem(((dialogDataReturn) s).getTitle());
+                    break;
+                }
+                case SumkiItems.TAG: {
+                    mBabyDataSet.addsumkiItems(((dialogDataReturn) s).getTitle(), ((SumkiItems) bf).getCurent_Group_ID());
+                    bf.addItem(((dialogDataReturn) s).getTitle());
+                    break;
+                }
+            }
         }
         else {
             bf.editItem( (dialogDataReturn) s ) ;
         }
+        bf.mAdapter.notifyDataSetChanged();
     }
 
     public void readSaveData (){
@@ -110,6 +136,14 @@ public class app_main extends AppCompatActivity
                 R.array.budjet_1, R.array.budjet_2, R.array.budjet_3, R.array.budjet_4, R.array.budjet_5, R.array.budjet_6,
                 R.array.budjet_7, R.array.budjet_8, R.array.budjet_9, R.array.budjet_10, R.array.budjet_11, R.array.budjet_12,
         };
+        int[] mitemlist ={
+                R.array.sumki_1,
+                R.array.sumki_2,
+                R.array.sumki_3,
+                R.array.sumki_4,
+                R.array.sumki_5
+
+        };
         mBabyDataSet = babyDataSet.get(getApplicationContext());
         mBabyDataSet.setBudjetList(getResources().getStringArray(R.array.budjet_items_name));
         mBabyDataSet.setSumkiList(getResources().getStringArray(R.array.sumki));
@@ -117,6 +151,10 @@ public class app_main extends AppCompatActivity
         budjet.setItemList(mBabyDataSet.getBudjetList());
         for (int i =0 ; i < mitemlist_budjet.length; i++ ){
             mBabyDataSet.setBudjetItemsList(getResources().getStringArray(mitemlist_budjet[i]),i);
+        }
+
+        for (int i =0 ; i < mitemlist.length; i++ ){
+            mBabyDataSet.setSumkiItems(getResources().getStringArray(mitemlist[i]),i);
         }
 
     }

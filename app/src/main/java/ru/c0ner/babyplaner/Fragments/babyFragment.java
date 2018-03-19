@@ -22,6 +22,7 @@ public class babyFragment extends Fragment implements  AdapterView.OnItemClickLi
 
 
      ArrayList mItemList;
+     public babyAdapter mAdapter;
 
     public interface onItemSelectListiner  {
         public void ItemSelect (String fragmentTag, String s, int array_id );
@@ -71,7 +72,7 @@ public class babyFragment extends Fragment implements  AdapterView.OnItemClickLi
     }
     public void addItem(String s)
     {
-        babyItemBase m = new babyItemBase(s);
+        babyItemBase m = new babyItemBase(s,mItemList.size());
         mItemList.add(m);
     }
     public void dialogAdd ()
@@ -84,5 +85,9 @@ public class babyFragment extends Fragment implements  AdapterView.OnItemClickLi
 
     public void setItemList(ArrayList list) {
         mItemList = list;
+    }
+
+    public String getTAG (){
+        return "";
     }
 }

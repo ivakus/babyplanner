@@ -20,9 +20,32 @@ public class babyDataSet {
     public ArrayList mSumki;
     public ArrayList mSumkiItems;
 
+    public ArrayList <babyItemBase> getSumkiItems(int parent) {
+        ArrayList result = new ArrayList<>();
+        babyItemBase bm ;
+        for ( int i =0 ; i< mSumkiItems.size();i++) {
+            bm = (babyItemBase) mSumkiItems.get(i);
+            if (bm.mParent == parent) {result.add(bm);}
+
+        }
+
+        return result ;
+    }
+
+    public void setSumkiItems(String[] list,int parent) {
+        for (int i = 0; i < list.length; i++) {
+            babyItemBase m = new babyItemBase(list[i]);
+            m.setParent(parent);
+            mSumkiItems.add(m);
+            //mBudjetItems.add(setBudjetItemsList(mitemlist_budjet[i],i));
+        }
+    }
 
     private babyDataSet (Context context){
-
+        mSumki = new ArrayList<babyItemBase>();
+        mSumkiItems = new ArrayList<babyItemBase>();
+        mBudjetItems = new ArrayList<babyItemBase>();
+        mBudjetList = new ArrayList<babyItemBase>();
 
     }
     public static babyDataSet get (Context context){
@@ -34,18 +57,18 @@ public class babyDataSet {
         return mbabyDataSet;
     }
     public  void setBudjetItemsList (String[] list,int parent){
-        ArrayList <babyItemBudjet> mB = new ArrayList<babyItemBudjet> ();
+      //  ArrayList  mB = new ArrayList<babyItemBudjet> ();
         for (int i = 0; i < list.length; i++) {
             babyItemBase m = new babyItemBudjet(list[i]);
             m.setParent(parent);
             mBudjetItems.add(m);
             //mBudjetItems.add(setBudjetItemsList(mitemlist_budjet[i],i));
         }
-        mBudjetItems.add(mB);
+
     }
+
     public void setBudjetList (String[] list) {
-        mBudjetItems = new ArrayList();
-        mBudjetList = new ArrayList<babyItemBase>();
+
         for (int i = 0; i < list.length; i++) {
             babyItemBase m = new babyItemBase(list[i]);
             m.mGroupID = i;
@@ -61,7 +84,7 @@ public class babyDataSet {
 
     public void setSumkiList (String[] list) {
 
-        mSumki = new ArrayList<babyItemBase>();
+
         for (int i = 0; i < list.length; i++) {
             babyItemBase m = new babyItemBase(list[i]);
             m.mGroupID = i;
@@ -73,7 +96,38 @@ public class babyDataSet {
             return mBudjetList;
     }
 
-    public ArrayList <babyItemBudjet> getBudjetItemList (int position){
-        return (ArrayList)mBudjetItems.get(position);
+    public ArrayList <babyItemBase> getBudjetItemList (int parent){
+        ArrayList result = new ArrayList<>();
+        babyItemBase bm ;
+        for ( int i =0 ; i< mBudjetItems.size();i++) {
+            bm = (babyItemBase) mBudjetItems.get(i);
+            if (bm.mParent == parent) {result.add(bm);}
+
+        }
+
+        return result ;
     }
+    public void addBudjetList (String s){
+        babyItemBase m = new babyItemBase(s,-1,mBudjetList.size());
+        mBudjetList.add(m);
+
+    }
+    public void addBudjetItem (String s , int parent )
+    {
+        babyItemBudjet m = new babyItemBudjet(s,parent,0,0,1,0);
+
+        mBudjetItems.add(m);
+    }
+
+
+    public void addSumkiList (String s){
+        babyItemBase m = new babyItemBase(s,-1,mSumki.size());
+        mSumki.add(m);
+    }
+    public void addsumkiItems (String s, int parent){
+        babyItemBase m = new babyItemBase(s,parent);
+        mSumkiItems.add(m);
+    }
+
+
 }

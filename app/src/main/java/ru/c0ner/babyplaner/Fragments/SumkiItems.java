@@ -27,8 +27,18 @@ public class SumkiItems extends babyFragment implements  AdapterView.OnItemClick
     }
 
     String [] mItems;
-    babyAdapter mAdapter;
+   // babyAdapter mAdapter;
     ListView mListView;
+
+    public int getCurent_Group_ID() {
+        return mCurent_Group_ID;
+    }
+
+    public void setCurent_Group_ID(int curent_Group_ID) {
+        mCurent_Group_ID = curent_Group_ID;
+    }
+
+    public int mCurent_Group_ID = 0;
 
     public void setTitle(String title) {
         mTitle = title;
@@ -51,7 +61,8 @@ public class SumkiItems extends babyFragment implements  AdapterView.OnItemClick
         mListView = v.getRootView().findViewById(R.id.sumki1_listview);
         TextView tw = v.findViewById(R.id.main_sum_title);
         tw.setText(mTitle);
-        mAdapter = new babyAdapter(v.getContext(),mItems);
+        //mAdapter = new babyAdapter(v.getContext(),mItems);
+        mAdapter = new babyAdapter(v.getContext(),mItemList);
         mListView.setOnItemClickListener( SumkiItems.this );
         mListView.setAdapter(mAdapter);
         registerForContextMenu(mListView);
@@ -97,7 +108,8 @@ public class SumkiItems extends babyFragment implements  AdapterView.OnItemClick
     {
 
         Toast.makeText(this.getContext(),s, Toast.LENGTH_SHORT).show();
-        mAdapter.insert(s);
+        //mAdapter.insert(s);
+        super.addItem(s);
         this.mAdapter.notifyDataSetChanged();
     }
 
@@ -113,5 +125,8 @@ public class SumkiItems extends babyFragment implements  AdapterView.OnItemClick
     public void editItem (dialogDataReturn s){
         mAdapter.mItems.set(s.getPosition(),new babyItemBase(s.getTitle()));
         this.mAdapter.notifyDataSetChanged();
+    }
+    public String getTAG (){
+        return  TAG;
     }
 }

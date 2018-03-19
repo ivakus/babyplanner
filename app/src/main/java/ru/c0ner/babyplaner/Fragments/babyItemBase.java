@@ -12,6 +12,7 @@ public class babyItemBase {
     public babyItemBase(String title) {
         mTitle = title;
         mParent = -1;
+        mGroupID = -1;
     }
 
     public babyItemBase(String title, int parent) {
@@ -19,6 +20,11 @@ public class babyItemBase {
         mParent = parent;
     }
 
+    public babyItemBase(String title, int parent,int Groupe_id) {
+        mTitle = title;
+        mParent = parent;
+        mGroupID = Groupe_id;
+    }
     public String getTitle() {
         return mTitle;
     }

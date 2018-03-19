@@ -28,30 +28,17 @@ public class Budjet extends babyFragment implements AdapterView.OnItemClickListe
 
 
     ListView listView;
-
-
-
-    // ArrayList mItemList;
-    babyAdapter mAdapter;
+    // babyAdapter mAdapter;
     String mTitle;
-
     public final static String TAG = "BudjetTAG";
-    public final static int[] mitemlist = {
-            R.array.budjet_1, R.array.budjet_2, R.array.budjet_3, R.array.budjet_4, R.array.budjet_5, R.array.budjet_6,
-            R.array.budjet_7, R.array.budjet_8, R.array.budjet_9, R.array.budjet_10, R.array.budjet_11, R.array.budjet_12,
-    };
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_budjet, container, false);
-        // Inflate the layout for this fragment
-       // names = getResources().getStringArray(R.array.budjet_items_name);
+
         listView = (ListView) v.findViewById(R.id.main_table);
-        ///
-        //adapter = new ArrayAdapter<>(v.getContext(), R.layout.list_view, R.id.list_view_item_text, names);
-       // mAdapter = new babyAdapter(this.getContext(), names);
         mAdapter = new babyAdapter(this.getContext(),mItemList);
         listView.setOnItemClickListener(Budjet.this);
         listView.setAdapter(mAdapter);
@@ -66,8 +53,10 @@ public class Budjet extends babyFragment implements AdapterView.OnItemClickListe
     public void onItemClick(AdapterView parent, View v, int position, long id) {
         // Do something in response to the click
         String str = "Test";
-        str = parent.getAdapter().getItem(position).toString();
-        mItemSelectListiner.ItemSelect(TAG, str, mitemlist[position]);
+        babyItemBase m = (babyItemBase) parent.getAdapter().getItem(position);
+        str = m.getTitle().toString();
+        int Group_ID = m.mGroupID;
+        mItemSelectListiner.ItemSelect(TAG, str, Group_ID);
     }
 
     public void setTitle(String title) {
@@ -115,7 +104,7 @@ public class Budjet extends babyFragment implements AdapterView.OnItemClickListe
     {
 
          //   Toast.makeText(this.getContext(), s, Toast.LENGTH_SHORT).show();
-            super.addItem(s);
+          //  super.addItem(s);
             //mAdapter.insert(s);
             this.mAdapter.notifyDataSetChanged();
 
@@ -125,4 +114,8 @@ public class Budjet extends babyFragment implements AdapterView.OnItemClickListe
       //  mAdapter.mItems.set(s.getPosition(),new babyItemBase(s.getTitle()));
         this.mAdapter.notifyDataSetChanged();
     }
+    public String getTAG (){
+        return  TAG;
+    }
+
 }

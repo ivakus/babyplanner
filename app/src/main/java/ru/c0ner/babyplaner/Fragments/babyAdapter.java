@@ -56,7 +56,7 @@ public class babyAdapter extends BaseAdapter {
         public Object getItem(int position) {
 
             babyItemBase m = (babyItemBase) mItems.get(position);
-            return m.getTitle().toString();
+            return m;
         }
 
         @Override
@@ -66,7 +66,8 @@ public class babyAdapter extends BaseAdapter {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            String str = (String) getItem(position);
+            babyItemBase m = (babyItemBase) getItem(position);
+            String str = (String) m.getTitle().toString();
             ViewHolder holder;
             if (convertView == null) {
                 convertView = LayoutInflater.from(context).inflate(R.layout.list_view, parent, false);

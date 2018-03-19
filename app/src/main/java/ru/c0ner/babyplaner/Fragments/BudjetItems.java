@@ -21,23 +21,28 @@ import ru.c0ner.babyplaner.R;
  * A simple {@link Fragment} subclass.
  */
 public class BudjetItems extends babyFragment implements  AdapterView.OnItemClickListener {
-    public void setItems(String[] items) {
-        mItems = items;
-    }
+
 
     public void setTitle(String title) {
         mTitle = title;
     }
 
-    String[] mItems;
-    babyBudjetItemAdapter mAdapter;
+
+   // babyBudjetItemAdapter mAdapter;
     ListView mListView;
     String mTitle;
     public final static String TAG = "BudjetitemsTAG";
 
-    public BudjetItems() {
-        // Required empty public constructor
+    public int getCurent_Group_ID() {
+        return mCurent_Group_ID;
     }
+
+    public void setCurent_Group_ID(int curent_Group_ID) {
+        mCurent_Group_ID = curent_Group_ID;
+    }
+
+    public int mCurent_Group_ID = 0;
+
 
 
     @Override
@@ -49,9 +54,7 @@ public class BudjetItems extends babyFragment implements  AdapterView.OnItemClic
         mListView = v.getRootView().findViewById(R.id.budjetitems_listview);
         TextView tw = v.findViewById(R.id.budjet_title);
         tw.setText(mTitle);
-        // mItems = getResources().getStringArray(R.array.budjet_malish_gigiena);
-        mAdapter = new babyBudjetItemAdapter(v.getContext(), mItems);
-        //mAdapter = new babyBudjetItemAdapter(v.getContext(),mItemList);
+        mAdapter = new babyBudjetItemAdapter(v.getContext(),mItemList);
         mListView.setOnItemClickListener(BudjetItems.this);
         mListView.setAdapter(mAdapter);
         registerForContextMenu(mListView);
@@ -95,9 +98,9 @@ public class BudjetItems extends babyFragment implements  AdapterView.OnItemClic
     }
     public void addItem (String s)
     {
-
+        super.addItem(s);
         Toast.makeText(this.getContext(),s, Toast.LENGTH_SHORT).show();
-        mAdapter.insert(s);
+       // mAdapter.insert(s);
         this.mAdapter.notifyDataSetChanged();
     }
     public void dialogEdit(int position){
@@ -110,7 +113,11 @@ public class BudjetItems extends babyFragment implements  AdapterView.OnItemClic
     }
 
     public void editItem (dialogDataReturn s){
-        mAdapter.mItems.set(s.getPosition(),new babyItemBase(s.getTitle()));
+        super.editItem(s);
+        //mAdapter.mItems.set(s.getPosition(),new babyItemBase(s.getTitle()));
         this.mAdapter.notifyDataSetChanged();
+    }
+    public String getTAG (){
+        return  TAG;
     }
 }
