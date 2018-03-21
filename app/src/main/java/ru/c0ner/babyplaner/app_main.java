@@ -1,6 +1,9 @@
 package ru.c0ner.babyplaner;
 
+import android.content.ContentValues;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
@@ -18,6 +21,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import ru.c0ner.babyplaner.Fragments.Budjet;
 import ru.c0ner.babyplaner.Fragments.BudjetItems;
 import ru.c0ner.babyplaner.Fragments.Setting;
@@ -25,8 +30,10 @@ import ru.c0ner.babyplaner.Fragments.Sumki;
 import ru.c0ner.babyplaner.Fragments.SumkiItems;
 import ru.c0ner.babyplaner.Fragments.babyAddDialog;
 import ru.c0ner.babyplaner.Fragments.babyFragment;
+import ru.c0ner.babyplaner.Fragments.babyItemBase;
 import ru.c0ner.babyplaner.Fragments.babyStoradge;
 import ru.c0ner.babyplaner.Fragments.dialogDataReturn;
+import ru.c0ner.babyplaner.base.babyDBHelper;
 import ru.c0ner.babyplaner.base.babyDataSet;
 
 public class app_main extends AppCompatActivity
@@ -111,7 +118,30 @@ public class app_main extends AppCompatActivity
             }
         }
         else {
-            bf.editItem( (dialogDataReturn) s ) ;
+            switch (bf.getTAG()) {
+                case Budjet.TAG: {
+                    mBabyDataSet.editBudjetList((dialogDataReturn) s);
+                    break;
+                }
+                case Sumki.TAG: {
+                    //Toast.makeText(this.getContext(),s, Toast.LENGTH_SHORT).show();
+                    mBabyDataSet.editSumkiList((dialogDataReturn) s);
+                    break;
+                }
+                case BudjetItems.TAG: {
+                    // String str = ""+ ((dialogDataReturn)s).getTitle() + ((BudjetItems) bf).getCurent_Group_ID();
+                    // Toast.makeText(this,str, Toast.LENGTH_SHORT).show();
+                    mBabyDataSet.editBudjetItem((dialogDataReturn) s);
+                    bf.editItem((dialogDataReturn) s);
+                    break;
+                }
+                case SumkiItems.TAG: {
+                    mBabyDataSet.editSumkiItem((dialogDataReturn) s);
+                    bf.editItem((dialogDataReturn) s);
+                    break;
+                }
+            }
+            // bf.editItem( (dialogDataReturn) s ) ;
         }
         bf.mAdapter.notifyDataSetChanged();
     }
@@ -156,10 +186,45 @@ public class app_main extends AppCompatActivity
         for (int i =0 ; i < mitemlist.length; i++ ){
             mBabyDataSet.setSumkiItems(getResources().getStringArray(mitemlist[i]),i);
         }
-
+        if (isFirst ) {
+            createSQLBase();
+        }
     }
 
     private void createSQLBase() {
+        babyDBHelper mDB = new babyDBHelper(getApplicationContext());
+        SQLiteDatabase baby_base = mDB.getWritableDatabase();
+        String [] Itemlist = null;
+        //Cursor c = baby_base.query("mytable", null, null, null, null, null, null);
+        int[] mitemlist_budjet = {
+                R.array.budjet_1, R.array.budjet_2, R.array.budjet_3, R.array.budjet_4, R.array.budjet_5, R.array.budjet_6,
+                R.array.budjet_7, R.array.budjet_8, R.array.budjet_9, R.array.budjet_10, R.array.budjet_11, R.array.budjet_12,
+        };
+        int[] mitemlist ={
+                R.array.sumki_1,
+                R.array.sumki_2,
+                R.array.sumki_3,
+                R.array.sumki_4,
+                R.array.sumki_5
+
+        };
+        Itemlist = getResources().getStringArray(R.array.budjet_items_name);
+        for (int i = 0; i <Itemlist.length;i++)
+        {
+            ContentValues cv = new ContentValues();
+            cv.put("title",Itemlist[i].toString());
+            cv.put("Group_ID",1);
+            baby_base.insert("baby_list",null,cv);
+        }
+
+        Itemlist = getResources().getStringArray(R.array.sumki);
+        for (int i = 0; i <Itemlist.length;i++)
+        {
+            ContentValues cv = new ContentValues();
+            cv.put("title",Itemlist[i].toString());
+            cv.put("Group_ID",2);
+            baby_base.insert("baby_list",null,cv);
+        }
 
     }
 
@@ -177,7 +242,7 @@ public class app_main extends AppCompatActivity
         mBudjetItems = new BudjetItems();
         mSetting = new Setting();
         fm = getSupportFragmentManager();
-       // readSaveData();
+        readSaveData();
         CreateDataSet();
 
     }
@@ -215,7 +280,7 @@ public class app_main extends AppCompatActivity
     @Override
     protected void onStart() {
         super.onStart();
-        readSaveData();
+       // readSaveData();
         setUserinfo();
     }
 
