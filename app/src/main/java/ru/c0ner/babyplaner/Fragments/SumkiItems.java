@@ -116,7 +116,7 @@ public class SumkiItems extends babyFragment implements  AdapterView.OnItemClick
     public void dialogEdit(int position){
         DialogFragment addDialog = new babyAddDialog();
         ((babyAddDialog) addDialog).setTitle("Редактировать");
-        ((babyAddDialog) addDialog).setItems(mAdapter.getItem(position).toString());
+        ((babyAddDialog) addDialog).setItems(((babyItemBase) mAdapter.getItem(position)).getTitle().toString());
         ((babyAddDialog) addDialog).setItemPosition(position);
         addDialog.show(getFragmentManager(),"Edit_SumkiItem");
 
