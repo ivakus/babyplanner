@@ -6,38 +6,39 @@ package ru.c0ner.babyplaner.Fragments;
 
 
 public class babyItemBudjet extends babyItemBase {
-    public int mPrice;
-    public int mPriceTeoritek;
+    public int mPrice_real;
+    public int mPrice_plan;
     public int mKolvo;
     public int mGoodprice;
 
     public babyItemBudjet(String title) {
         super(title);
+
     }
 
     public babyItemBudjet(String title, int parent, int price, int priceTeoritek, int kolvo, int goodprice) {
         super(title, parent);
-        mPrice = price;
-        mPriceTeoritek = priceTeoritek;
+        mPrice_plan = price;
+        mPrice_real = 0;
         mKolvo = kolvo;
-        mGoodprice = goodprice;
+        mGoodprice = 0;
     }
 
 
     public int getPrice() {
-        return mPrice;
+        return mPrice_plan;
     }
 
     public void setPrice(int price) {
-        mPrice = price;
+        mPrice_plan = price;
     }
 
-    public int getPriceTeoritek() {
-        return mPriceTeoritek;
+    public int getPriceReal() {
+        return mPrice_real;
     }
 
-    public void setPriceTeoritek(int priceTeoritek) {
-        mPriceTeoritek = priceTeoritek;
+    public void setPriceReal(int priceTeoritek) {
+        mPrice_real = priceTeoritek;
     }
 
     public int getKolvo() {

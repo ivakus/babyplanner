@@ -8,11 +8,31 @@ public class babyItemBase {
     public String mTitle;
     public int mParent;
     public int mGroupID;
+    public int mID;
 
     public babyItemBase(String title) {
         mTitle = title;
-        mParent = -1;
-        mGroupID = -1;
+        mParent = 0;
+        mGroupID = 0;
+        mID = 0;
+
+    }
+
+    public int getID() {
+        return mID;
+    }
+
+    public void setID(int ID) {
+        mID = ID;
+    }
+
+    public int getGroupID() {
+
+        return mGroupID;
+    }
+
+    public void setGroupID(int groupID) {
+        mGroupID = groupID;
     }
 
     public babyItemBase(String title, int parent) {

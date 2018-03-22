@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -96,23 +97,27 @@ public class app_main extends AppCompatActivity
             switch (bf.getTAG()) {
                 case Budjet.TAG: {
                     mBabyDataSet.addBudjetList(((dialogDataReturn) s).getTitle());
+                    bf.mAdapter.notifyDataSetChanged();
                     break;
                 }
                 case Sumki.TAG: {
                     //Toast.makeText(this.getContext(),s, Toast.LENGTH_SHORT).show();
                     mBabyDataSet.addSumkiList(((dialogDataReturn) s).getTitle());
+                    bf.mAdapter.notifyDataSetChanged();
                     break;
                 }
                 case BudjetItems.TAG: {
                     // String str = ""+ ((dialogDataReturn)s).getTitle() + ((BudjetItems) bf).getCurent_Group_ID();
                     // Toast.makeText(this,str, Toast.LENGTH_SHORT).show();
                     mBabyDataSet.addBudjetItem(((dialogDataReturn) s).getTitle(), ((BudjetItems) bf).getCurent_Group_ID());
-                    bf.addItem(((dialogDataReturn) s).getTitle());
+                    ((BudjetItems) bf).addItem(((dialogDataReturn) s).getTitle());
+                    ((BudjetItems) bf).mAdapter.notifyDataSetChanged();
                     break;
                 }
                 case SumkiItems.TAG: {
                     mBabyDataSet.addsumkiItems(((dialogDataReturn) s).getTitle(), ((SumkiItems) bf).getCurent_Group_ID());
                     bf.addItem(((dialogDataReturn) s).getTitle());
+                    bf.mAdapter.notifyDataSetChanged();
                     break;
                 }
             }
@@ -121,11 +126,13 @@ public class app_main extends AppCompatActivity
             switch (bf.getTAG()) {
                 case Budjet.TAG: {
                     mBabyDataSet.editBudjetList((dialogDataReturn) s);
+                    bf.mAdapter.notifyDataSetChanged();
                     break;
                 }
                 case Sumki.TAG: {
                     //Toast.makeText(this.getContext(),s, Toast.LENGTH_SHORT).show();
                     mBabyDataSet.editSumkiList((dialogDataReturn) s);
+                    bf.mAdapter.notifyDataSetChanged();
                     break;
                 }
                 case BudjetItems.TAG: {
@@ -133,62 +140,47 @@ public class app_main extends AppCompatActivity
                     // Toast.makeText(this,str, Toast.LENGTH_SHORT).show();
                     mBabyDataSet.editBudjetItem((dialogDataReturn) s);
                     bf.editItem((dialogDataReturn) s);
+                    bf.mAdapter.notifyDataSetChanged();
                     break;
                 }
                 case SumkiItems.TAG: {
                     mBabyDataSet.editSumkiItem((dialogDataReturn) s);
                     bf.editItem((dialogDataReturn) s);
+                    bf.mAdapter.notifyDataSetChanged();
                     break;
                 }
             }
             // bf.editItem( (dialogDataReturn) s ) ;
         }
-        bf.mAdapter.notifyDataSetChanged();
+//
     }
 
     public void readSaveData (){
         mStor = new babyStoradge (getApplicationContext());
-       // mSetting.mStor = mStor;
+        mSetting.mStor = mStor;
         isFirst = mStor.getDataBoolean(FIRST_START);
         if (isFirst){
             // mStor.addData(FIRST_START,false);
-            CreateDataSet();
-           // createSQLBase();
+           // CreateDataSet();
+           createSQLBase();
 
         }
+        // createSQLBase();
         mUser_name = mStor.getDataString(USER_NAME);
         days_rodov_int = mStor.getDataInt(DAYS_RODOV);
         Toast.makeText(getApplicationContext(), mUser_name, Toast.LENGTH_SHORT).show();
     }
 
     private void CreateDataSet() {
-        int[] mitemlist_budjet = {
-                R.array.budjet_1, R.array.budjet_2, R.array.budjet_3, R.array.budjet_4, R.array.budjet_5, R.array.budjet_6,
-                R.array.budjet_7, R.array.budjet_8, R.array.budjet_9, R.array.budjet_10, R.array.budjet_11, R.array.budjet_12,
-        };
-        int[] mitemlist ={
-                R.array.sumki_1,
-                R.array.sumki_2,
-                R.array.sumki_3,
-                R.array.sumki_4,
-                R.array.sumki_5
 
-        };
         mBabyDataSet = babyDataSet.get(getApplicationContext());
         mBabyDataSet.setBudjetList(getResources().getStringArray(R.array.budjet_items_name));
         mBabyDataSet.setSumkiList(getResources().getStringArray(R.array.sumki));
         mSumki.setItemList(mBabyDataSet.getSumkiList());
         budjet.setItemList(mBabyDataSet.getBudjetList());
-        for (int i =0 ; i < mitemlist_budjet.length; i++ ){
-            mBabyDataSet.setBudjetItemsList(getResources().getStringArray(mitemlist_budjet[i]),i);
-        }
+        mBabyDataSet.setBudjetItemsList();
+        mBabyDataSet.setSumkiItems();
 
-        for (int i =0 ; i < mitemlist.length; i++ ){
-            mBabyDataSet.setSumkiItems(getResources().getStringArray(mitemlist[i]),i);
-        }
-        if (isFirst ) {
-            createSQLBase();
-        }
     }
 
     private void createSQLBase() {
@@ -214,7 +206,22 @@ public class app_main extends AppCompatActivity
             ContentValues cv = new ContentValues();
             cv.put("title",Itemlist[i].toString());
             cv.put("Group_ID",1);
-            baby_base.insert("baby_list",null,cv);
+            long result = baby_base.insert("baby_list",null,cv);
+            Log.d("DB-1", "Title = " + Itemlist[i].toString() + "ID = "+result);
+            String[] pod_item = getResources().getStringArray(mitemlist_budjet[i]);
+
+            for (int j = 0 ; j < pod_item.length; j++){
+                // ID , Group_ID integer, title text, parent_ID integer, price_plan integer,price_real integer, kol_vo integer
+                ContentValues cv1 = new ContentValues();
+                cv1.put("title",pod_item[j].toString());
+                cv1.put("parent_ID",result);
+                cv1.put("Group_ID",1);
+                cv1.put("price_plan",200);
+                cv1.put("price_real",199);
+                cv1.put("kol_vo",2);
+                long result1 = baby_base.insert("baby_items",null,cv1);
+                Log.d("DB-1", "Title = " + pod_item[j].toString() + "ID = "+result1);
+            }
         }
 
         Itemlist = getResources().getStringArray(R.array.sumki);
@@ -223,7 +230,23 @@ public class app_main extends AppCompatActivity
             ContentValues cv = new ContentValues();
             cv.put("title",Itemlist[i].toString());
             cv.put("Group_ID",2);
-            baby_base.insert("baby_list",null,cv);
+            long result = baby_base.insert("baby_list",null,cv);
+            Log.d("DB-1", "Title = " + Itemlist[i].toString() + "ID = "+result);
+            String[] pod_item = getResources().getStringArray(mitemlist[i]);
+
+            for (int j = 0 ; j < pod_item.length; j++){
+                // ID , title text, parent_ID integer, price_plan integer,price_real integer, kol_vo integer
+                ContentValues cv1 = new ContentValues();
+                cv1.put("title",pod_item[j].toString());
+                cv1.put("parent_ID",result);
+                cv1.put("Group_ID",2);
+                cv1.put("price_plan",200);
+                cv1.put("price_real",199);
+                cv1.put("kol_vo",2);
+                long result1 = baby_base.insert("baby_items",null,cv1);
+                Log.d("DB-1", "Title = " + pod_item[j].toString() + "ID = "+result1);
+            }
+
         }
 
     }

@@ -54,7 +54,7 @@ public class babyBudjetItemAdapter extends babyAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        babyItemBase m = (babyItemBase) getItem(position);
+        babyItemBudjet m = (babyItemBudjet) getItem(position);
         String str = (String) m.getTitle().toString();
 
         ViewHolderBudjet holder;
@@ -68,7 +68,7 @@ public class babyBudjetItemAdapter extends babyAdapter {
             holder = (ViewHolderBudjet) convertView.getTag();
         }
         holder.mTitle.setText(str);
-        holder.mKolvo.setText("20 шт.");
+        holder.mKolvo.setText(( (Integer) m.getKolvo()).toString());
         return convertView;
     }
 

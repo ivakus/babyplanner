@@ -38,7 +38,7 @@ public class Setting extends babyFragment implements Button.OnClickListener{
         mDay_do_rodov = (EditText) v.getRootView().findViewById(R.id.setting_day_do_rodov);
         Button btn = (Button) v.getRootView().findViewById(R.id.settings_save);
         btn.setOnClickListener(this);
-        mStor = new babyStoradge (getContext());
+        // mStor = new babyStoradge (getContext());
         ReadData();
         return v;
     }

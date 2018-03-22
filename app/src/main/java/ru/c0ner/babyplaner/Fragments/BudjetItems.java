@@ -15,6 +15,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import ru.c0ner.babyplaner.R;
 
 /**
@@ -30,7 +32,9 @@ public class BudjetItems extends babyFragment implements  AdapterView.OnItemClic
 
    // babyBudjetItemAdapter mAdapter;
     ListView mListView;
+    ArrayList mItemList;
     String mTitle;
+    public babyBudjetItemAdapter mAdapter;
     public final static String TAG = "BudjetitemsTAG";
 
     public int getCurent_Group_ID() {
@@ -64,7 +68,9 @@ public class BudjetItems extends babyFragment implements  AdapterView.OnItemClic
     public void onItemClick(AdapterView parent, View v, int position, long id) {
         // Do something in response to the click
         String str = "Test";
-        str = parent.getAdapter().getItem(position).toString();
+        //str = parent.getAdapter().getItem(position).toString();
+        babyItemBase m = (babyItemBase) parent.getAdapter().getItem(position);
+        str = m.getTitle().toString();
         Toast.makeText(v.getContext(), str, Toast.LENGTH_SHORT).show();
 
     }
@@ -98,10 +104,12 @@ public class BudjetItems extends babyFragment implements  AdapterView.OnItemClic
     }
     public void addItem (String s)
     {
-        super.addItem(s);
+        //super.addItem(s);
+        babyItemBudjet m = new babyItemBudjet(s);
+        mItemList.add(m);
         Toast.makeText(this.getContext(),s, Toast.LENGTH_SHORT).show();
        // mAdapter.insert(s);
-        this.mAdapter.notifyDataSetChanged();
+       // this.mAdapter.notifyDataSetChanged();
     }
     public void dialogEdit(int position){
         DialogFragment addDialog = new babyAddDialog();
@@ -119,5 +127,10 @@ public class BudjetItems extends babyFragment implements  AdapterView.OnItemClic
     }
     public String getTAG (){
         return  TAG;
+    }
+
+    public void setItemList(ArrayList list) {
+        mItemList = new ArrayList<babyItemBudjet>();
+        mItemList = list;
     }
 }

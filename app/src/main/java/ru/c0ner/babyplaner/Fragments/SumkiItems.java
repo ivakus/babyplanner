@@ -72,7 +72,9 @@ public class SumkiItems extends babyFragment implements  AdapterView.OnItemClick
     public void onItemClick(AdapterView parent, View v, int position, long id) {
         // Do something in response to the click
         String str = "Test";
-        str = parent.getAdapter().getItem(position).toString();
+        // str = parent.getAdapter().getItem(position).toString();
+        babyItemBase m = (babyItemBase) parent.getAdapter().getItem(position);
+        str = m.getTitle().toString();
         Toast.makeText(v.getContext(), str, Toast.LENGTH_SHORT).show();
     }
 
