@@ -32,9 +32,9 @@ public class BudjetItems extends babyFragment implements  AdapterView.OnItemClic
 
    // babyBudjetItemAdapter mAdapter;
     ListView mListView;
-    ArrayList mItemList;
+    //ArrayList mItemList;
     String mTitle;
-    public babyBudjetItemAdapter mAdapter;
+   // public babyBudjetItemAdapter mAdapter;
     public final static String TAG = "BudjetitemsTAG";
 
     public int getCurent_Group_ID() {
@@ -47,14 +47,16 @@ public class BudjetItems extends babyFragment implements  AdapterView.OnItemClic
 
     public int mCurent_Group_ID = 0;
 
-
+    public BudjetItems() {
+        super();
+        mItemList = new ArrayList<babyItemBudjet>();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.layout_budjetitems, container, false);
-        Log.d("Baby", "Фрагмент BudjetItem создался ");
         mListView = v.getRootView().findViewById(R.id.budjetitems_listview);
         TextView tw = v.findViewById(R.id.budjet_title);
         tw.setText(mTitle);
@@ -89,7 +91,8 @@ public class BudjetItems extends babyFragment implements  AdapterView.OnItemClic
                 break;
             }
             case R.id.menu_del: {
-                mAdapter.remove(info.position);
+               // mAdapter.remove(info.position);
+                dialogDelete(info.position);
                 this.mAdapter.notifyDataSetChanged();
                 break;
             }
@@ -97,11 +100,11 @@ public class BudjetItems extends babyFragment implements  AdapterView.OnItemClic
 
         return super.onContextItemSelected(item);
     }
+    /*
     public void dialogAdd(){
-        DialogFragment addDialog = new babyAddDialog();
-        ((babyAddDialog) addDialog).setTitle("Добавить Элемент");
-        addDialog.show(getFragmentManager(),"Add_Budjet");
+            super.dialogAdd();
     }
+    */
     public void addItem (String s)
     {
         //super.addItem(s);
@@ -111,17 +114,22 @@ public class BudjetItems extends babyFragment implements  AdapterView.OnItemClic
        // mAdapter.insert(s);
        // this.mAdapter.notifyDataSetChanged();
     }
+    /*
     public void dialogEdit(int position){
         DialogFragment addDialog = new babyAddDialog();
         ((babyAddDialog) addDialog).setTitle("Редактировать");
         ((babyAddDialog) addDialog).setItems(((babyItemBase) mAdapter.getItem(position)).getTitle().toString());
         ((babyAddDialog) addDialog).setItemPosition(position);
+        ((babyAddDialog) addDialog).setItem_ID (((babyItemBase) mAdapter.getItem(position)).mID);
+        ((babyAddDialog) addDialog).setDialogAction(R.integer.dlg_EDIT);
         addDialog.show(getFragmentManager(),"Edit_Budjet");
 
     }
+    */
 
     public void editItem (dialogDataReturn s){
-        super.editItem(s);
+        // super.editItem(s);
+        mItemList.set(s.getPosition(),new babyItemBudjet(s.getTitle()));
         //mAdapter.mItems.set(s.getPosition(),new babyItemBase(s.getTitle()));
         this.mAdapter.notifyDataSetChanged();
     }

@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Baby Planer</string>
     <string name="app_site">www.babyplannerclub.ru</string>
+    <integer name="dlg_ADD">1</integer>
+    <integer name="dlg_DEL">2</integer>
+    <integer name="dlg_EDIT">1</integer>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

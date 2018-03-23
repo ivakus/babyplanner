@@ -28,6 +28,21 @@ public class babyAddDialog extends DialogFragment implements DialogInterface.OnC
     public String mItems="";
     public EditText et;
     public String mTitle;
+    public int item_ID = 0;
+
+    public void setDialogAction(int dialogAction) {
+        this.dialogAction = dialogAction;
+    }
+
+    public int dialogAction= R.integer.dlg_ADD;
+
+    public int getItem_ID() {
+        return item_ID;
+    }
+
+    public void setItem_ID(int item_ID) {
+        this.item_ID = item_ID;
+    }
 
     public  interface babyDialogreturnListener {
         public void babyDialogReturnItem (Object s);
@@ -73,14 +88,19 @@ public class babyAddDialog extends DialogFragment implements DialogInterface.OnC
         View v = inflater.inflate(R.layout.add_dialog, null);
         et = v.findViewById(R.id.dialog_add_edit);
         TextView tw = v.findViewById(R.id.dialog_add_title);
-        tw.setText(mTitle);
+        //tw.setText(mTitle);
         et.setText(mItems);
         builder.setView(v);
         builder.setNegativeButton(R.string.str_otmena,this);
 
-        if (mItemPosition == -1 ){builder.setPositiveButton(R.string.str_add,this);}
-        else {builder.setPositiveButton(R.string.str_save,this);}
+        if (dialogAction == R.integer.dlg_ADD){  mTitle = "Добавить Элемент " ; builder.setPositiveButton(R.string.str_add,this);}
+        if (dialogAction == R.integer.dlg_EDIT){ mTitle = "Редактировать" ; builder.setPositiveButton(R.string.str_save,this);}
+        if (dialogAction == R.integer.dlg_DEL) {mTitle = "Удалить позицию ?" ; builder.setPositiveButton("Удалить",this);}
 
+        //et = v.findViewById(R.id.dialog_add_edit);
+        //TextView tw = v.findViewById(R.id.dialog_add_title);
+        tw.setText(mTitle);
+        //et.setText(mItems);
         return builder.create();
     }
 
@@ -88,6 +108,8 @@ public class babyAddDialog extends DialogFragment implements DialogInterface.OnC
     public void onClick(DialogInterface dialog, int which) {
         if (which == Dialog.BUTTON_POSITIVE) {
             dialogDataReturn res = new dialogDataReturn(et.getText().toString(),mItemPosition);
+            res.item_ID = item_ID;
+            res.dlgAction = dialogAction;
             //res.setTitle(et.getText().toString());
             //Toast.makeText(this.getContext(),mItems, Toast.LENGTH_SHORT).show();
             mBabyDialogreturnListener.babyDialogReturnItem(res);

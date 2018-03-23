@@ -16,10 +16,10 @@ public class babyItemBudjet extends babyItemBase {
 
     }
 
-    public babyItemBudjet(String title, int parent, int price, int priceTeoritek, int kolvo, int goodprice) {
+    public babyItemBudjet(String title, int parent, int price_plan, int price_real, int kolvo, int goodprice) {
         super(title, parent);
-        mPrice_plan = price;
-        mPrice_real = 0;
+        mPrice_plan = price_plan;
+        mPrice_real = price_real;
         mKolvo = kolvo;
         mGoodprice = 0;
     }

@@ -40,29 +40,29 @@ import ru.c0ner.babyplaner.base.babyDataSet;
 public class app_main extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener , babyFragment.onItemSelectListiner, FloatingActionButton.OnClickListener, babyAddDialog.babyDialogreturnListener {
 
-    final String STORADGE_NAME = "baby_v1";
-    final String USER_NAME = "USER_NAME";
-    final String FIRST_START = "FIRST_START";
-    boolean isFirst = true;
-    final String DAYS_RODOV = "DAYS_RODOV";
+    final String STORADGE_NAME = "baby_v1"; // Имя параметра версии хранилища
+    final String USER_NAME = "USER_NAME";   //клюя для параметра имя пользователя
+    final String FIRST_START = "FIRST_START"; //ключ для доступа в хранилице для параметра первый запуск
+    boolean isFirst = true;  // сюда загружаем данные из хранилища, параметр первый запуск
+    final String DAYS_RODOV = "DAYS_RODOV";  //ключ для доступа в хранилище , параметр дата родов
 
-    int days_rodov_int = 180;
-    String mUser_name = "Гость";
-    Budjet budjet;
-    Setting mSetting;
-    Sumki mSumki;
-    SumkiItems mSumkiItems;
-    BudjetItems mBudjetItems;
-    FragmentManager fm;
-    ProgressBar mMenu_progress;
-    TextView mDays_rodov;
-    TextView twUser_Name;
-    babyStoradge mStor;
-    FloatingActionButton fab;
-    babyDataSet mBabyDataSet;
+    int days_rodov_int = 180;   //храним данные по дате родов для обновления прогресс бара в навигационном меню
+    String mUser_name = "Гость";  // тут храним имя пользователя
+    Budjet budjet;    //фрагмент обрабатывающий список бюджетов
+    Setting mSetting;// фрагмент обрабатывающий настройки приложения
+    Sumki mSumki;  //фрагмент Обрабатывающий списки необходимых сумок
+    SumkiItems mSumkiItems; //фрагмент для элементов списка различных сумок
+    BudjetItems mBudjetItems; //фрагмент для списка элементов бюджета
+    FragmentManager fm; //фрагмент менеджер
+    ProgressBar mMenu_progress; //прогрес барр в панели навишации
+    TextView mDays_rodov; //текст в шапки панели навигации
+    TextView twUser_Name; // имя пользователя в шапке панели навигации
+    babyStoradge mStor; //хранилище на диске
+    FloatingActionButton fab;  //доступ к кнопке
+    babyDataSet mBabyDataSet;  //экземпляр кланна для работы с данными, данные храним в памяти для сохранения пишим в базу
 
 
-
+ // Интерфейс обработки событий из фрагментов
     public  void ItemSelect (String fragmentTag, String s, int array_id)
     {
       //Toast.makeText(this, fragmentTag, Toast.LENGTH_SHORT).show();
@@ -91,48 +91,50 @@ public class app_main extends AppCompatActivity
       }
        ft.commit();
     }
+//    Интерфейс обработки сообщений из диалогов
     public void babyDialogReturnItem (Object s) {
         babyFragment bf = (babyFragment) fm.findFragmentById(R.id.main_conteyner);
-        if (((dialogDataReturn) s).getPosition() == -1 ) {
+        dialogDataReturn ret = (dialogDataReturn) s;
+        if (ret.dlgAction == R.integer.dlg_ADD ) {
             switch (bf.getTAG()) {
                 case Budjet.TAG: {
-                    mBabyDataSet.addBudjetList(((dialogDataReturn) s).getTitle());
-                    bf.mAdapter.notifyDataSetChanged();
+                    mBabyDataSet.addBudjetList(ret.getTitle());
+                   // bf.mAdapter.notifyDataSetChanged();
                     break;
                 }
                 case Sumki.TAG: {
                     //Toast.makeText(this.getContext(),s, Toast.LENGTH_SHORT).show();
-                    mBabyDataSet.addSumkiList(((dialogDataReturn) s).getTitle());
-                    bf.mAdapter.notifyDataSetChanged();
+                    mBabyDataSet.addSumkiList(ret.getTitle());
+                   // bf.mAdapter.notifyDataSetChanged();
                     break;
                 }
                 case BudjetItems.TAG: {
                     // String str = ""+ ((dialogDataReturn)s).getTitle() + ((BudjetItems) bf).getCurent_Group_ID();
                     // Toast.makeText(this,str, Toast.LENGTH_SHORT).show();
-                    mBabyDataSet.addBudjetItem(((dialogDataReturn) s).getTitle(), ((BudjetItems) bf).getCurent_Group_ID());
-                    ((BudjetItems) bf).addItem(((dialogDataReturn) s).getTitle());
-                    ((BudjetItems) bf).mAdapter.notifyDataSetChanged();
+                    mBabyDataSet.addBudjetItem(ret.getTitle(), ((BudjetItems) bf).getCurent_Group_ID());
+                    ((BudjetItems) bf).addItem(ret.getTitle());
+                    //((BudjetItems) bf).mAdapter.notifyDataSetChanged();
                     break;
                 }
                 case SumkiItems.TAG: {
-                    mBabyDataSet.addsumkiItems(((dialogDataReturn) s).getTitle(), ((SumkiItems) bf).getCurent_Group_ID());
+                    mBabyDataSet.addsumkiItems(ret.getTitle(), ((SumkiItems) bf).getCurent_Group_ID());
                     bf.addItem(((dialogDataReturn) s).getTitle());
-                    bf.mAdapter.notifyDataSetChanged();
+                  //  bf.mAdapter.notifyDataSetChanged();
                     break;
                 }
             }
         }
-        else {
+        if (ret.dlgAction == R.integer.dlg_EDIT) {
             switch (bf.getTAG()) {
                 case Budjet.TAG: {
                     mBabyDataSet.editBudjetList((dialogDataReturn) s);
-                    bf.mAdapter.notifyDataSetChanged();
+                  //  bf.mAdapter.notifyDataSetChanged();
                     break;
                 }
                 case Sumki.TAG: {
                     //Toast.makeText(this.getContext(),s, Toast.LENGTH_SHORT).show();
                     mBabyDataSet.editSumkiList((dialogDataReturn) s);
-                    bf.mAdapter.notifyDataSetChanged();
+                 //   bf.mAdapter.notifyDataSetChanged();
                     break;
                 }
                 case BudjetItems.TAG: {
@@ -140,43 +142,77 @@ public class app_main extends AppCompatActivity
                     // Toast.makeText(this,str, Toast.LENGTH_SHORT).show();
                     mBabyDataSet.editBudjetItem((dialogDataReturn) s);
                     bf.editItem((dialogDataReturn) s);
-                    bf.mAdapter.notifyDataSetChanged();
+                  //  bf.mAdapter.notifyDataSetChanged();
                     break;
                 }
                 case SumkiItems.TAG: {
                     mBabyDataSet.editSumkiItem((dialogDataReturn) s);
                     bf.editItem((dialogDataReturn) s);
-                    bf.mAdapter.notifyDataSetChanged();
+                  //  bf.mAdapter.notifyDataSetChanged();
                     break;
                 }
             }
             // bf.editItem( (dialogDataReturn) s ) ;
         }
-//
+        if (ret.dlgAction==R.integer.dlg_DEL) {
+            switch (bf.getTAG()) {
+                case Budjet.TAG: {
+                    mBabyDataSet.delBudjetList(ret.getPosition(),ret.item_ID);
+                    //  bf.mAdapter.notifyDataSetChanged();
+                    break;
+                }
+                case Sumki.TAG: {
+                    //Toast.makeText(this.getContext(),s, Toast.LENGTH_SHORT).show();
+                    mBabyDataSet.delSumkiList(ret.getPosition(),ret.item_ID);
+                    //   bf.mAdapter.notifyDataSetChanged();
+                    break;
+                }
+                case BudjetItems.TAG: {
+                    // String str = ""+ ((dialogDataReturn)s).getTitle() + ((BudjetItems) bf).getCurent_Group_ID();
+                    // Toast.makeText(this,str, Toast.LENGTH_SHORT).show();
+                    //mBabyDataSet.editBudjetItem((dialogDataReturn) s);
+                    //bf.editItem((dialogDataReturn) s);
+                    //  bf.mAdapter.notifyDataSetChanged();
+                   mBabyDataSet.delBudjetItemsList (ret.getPosition(),ret.item_ID);
+                    break;
+                }
+                case SumkiItems.TAG: {
+                    //mBabyDataSet.editSumkiItem((dialogDataReturn) s);
+                    //bf.editItem((dialogDataReturn) s);
+                    //  bf.mAdapter.notifyDataSetChanged();
+                    mBabyDataSet.delSumkiItemsList(ret.getPosition(),ret.item_ID);
+                    break;
+                }
+            }
+        }
+        bf.mAdapter.notifyDataSetChanged();
     }
 
+//    читаем сохраннеые данные из хранилища телефона
     public void readSaveData (){
         mStor = new babyStoradge (getApplicationContext());
         mSetting.mStor = mStor;
         isFirst = mStor.getDataBoolean(FIRST_START);
         if (isFirst){
             // mStor.addData(FIRST_START,false);
-           // CreateDataSet();
+           // CreateDataSet(); создаем при первом запуске базу SQl
            createSQLBase();
 
         }
         // createSQLBase();
+        // заполняем поля имя пользователя и дату родов
         mUser_name = mStor.getDataString(USER_NAME);
         days_rodov_int = mStor.getDataInt(DAYS_RODOV);
-        Toast.makeText(getApplicationContext(), mUser_name, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Здраствуйте,"+mUser_name+" !", Toast.LENGTH_SHORT).show();
     }
 
     private void CreateDataSet() {
 
+        // создаем экземпляр класса хранилища данных в памяти
         mBabyDataSet = babyDataSet.get(getApplicationContext());
-        mBabyDataSet.setBudjetList(getResources().getStringArray(R.array.budjet_items_name));
-        mBabyDataSet.setSumkiList(getResources().getStringArray(R.array.sumki));
-        mSumki.setItemList(mBabyDataSet.getSumkiList());
+        mBabyDataSet.setBudjetList();
+        mBabyDataSet.setSumkiList();
+        mSumki.setItemList(mBabyDataSet.getSumkiList()); // заполняем массивы данных в классах фрагментов
         budjet.setItemList(mBabyDataSet.getBudjetList());
         mBabyDataSet.setBudjetItemsList();
         mBabyDataSet.setSumkiItems();

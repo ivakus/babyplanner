@@ -1,6 +1,7 @@
 package ru.c0ner.babyplaner.Fragments;
 
 import android.content.Context;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.view.ContextMenu;
 import android.view.Menu;
@@ -18,20 +19,24 @@ import ru.c0ner.babyplaner.R;
  * Created by d.ivaka on 13.03.2018.
  */
 
+
+// Все
 public class babyFragment extends Fragment implements  AdapterView.OnItemClickListener {
 
 
-     ArrayList mItemList;
-     public babyAdapter mAdapter;
+     public ArrayList mItemList; // Массив для хранения элментов типа babyItemBase содержит имя списка его ID
+     public babyAdapter mAdapter; // адаптер для ListView
+     public int Group_ID;
 
+     // интерфейс для возврата данных в активити.
     public interface onItemSelectListiner  {
-        public void ItemSelect (String fragmentTag, String s, int array_id );
+        public void ItemSelect (String fragmentTag, String s, int position );
     }
     public onItemSelectListiner mItemSelectListiner;
 
     public babyFragment() {
         super();
-        mItemList = new ArrayList();
+        mItemList = new ArrayList<babyItemBase>();
     }
 
     @Override
@@ -77,8 +82,30 @@ public class babyFragment extends Fragment implements  AdapterView.OnItemClickLi
     }
     public void dialogAdd ()
     {
-
+        DialogFragment addDialog = new babyAddDialog();
+       // ((babyAddDialog) addDialog).setTitle("Добавить Элемент");
+        ((babyAddDialog) addDialog).setDialogAction(R.integer.dlg_ADD);
+        addDialog.show(getFragmentManager(),"Add_Budjet");
     }
+    public void dialogEdit(int position) {
+        DialogFragment addDialog = new babyAddDialog();
+       // ((babyAddDialog) addDialog).setTitle("Редактировать");
+        ((babyAddDialog) addDialog).setDialogAction(R.integer.dlg_EDIT);
+        ((babyAddDialog) addDialog).setItems(((babyItemBase) mAdapter.getItem(position)).getTitle().toString());
+        ((babyAddDialog) addDialog).setItemPosition(position);
+        ((babyAddDialog) addDialog).setItem_ID(((babyItemBase) mAdapter.getItem(position)).mID);
+        addDialog.show(getFragmentManager(), "Edit_Budjet");
+    }
+
+    public void dialogDelete (int position) {
+        DialogFragment addDialog = new babyAddDialog();
+        ((babyAddDialog) addDialog).setDialogAction(R.integer.dlg_DEL);
+        ((babyAddDialog) addDialog).setItems(((babyItemBase) mAdapter.getItem(position)).getTitle().toString());
+        ((babyAddDialog) addDialog).setItemPosition(position);
+        ((babyAddDialog) addDialog).setItem_ID(((babyItemBase) mAdapter.getItem(position)).mID);
+        addDialog.show(getFragmentManager(), "Delete");
+    }
+
     public void editItem (dialogDataReturn s){
         mItemList.set(s.getPosition(),new babyItemBase(s.getTitle()));
     }

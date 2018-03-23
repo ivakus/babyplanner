@@ -93,7 +93,8 @@ public class SumkiItems extends babyFragment implements  AdapterView.OnItemClick
                 break;
             }
             case R.id.menu_del: {
-                mAdapter.remove(info.position);
+                //mAdapter.remove(info.position);
+                dialogDelete(info.position);
                 this.mAdapter.notifyDataSetChanged();
                 break;
             }
@@ -101,11 +102,13 @@ public class SumkiItems extends babyFragment implements  AdapterView.OnItemClick
 
         return super.onContextItemSelected(item);
     }
+    /*
     public void dialogAdd(){
         DialogFragment addDialog = new babyAddDialog();
         ((babyAddDialog) addDialog).setTitle("Добавить Элемент");
         addDialog.show(getFragmentManager(),"Add_Sumkiitem");
     }
+    */
     public void addItem (String s)
     {
 
@@ -114,16 +117,17 @@ public class SumkiItems extends babyFragment implements  AdapterView.OnItemClick
         super.addItem(s);
         this.mAdapter.notifyDataSetChanged();
     }
-
+/*
     public void dialogEdit(int position){
         DialogFragment addDialog = new babyAddDialog();
         ((babyAddDialog) addDialog).setTitle("Редактировать");
         ((babyAddDialog) addDialog).setItems(((babyItemBase) mAdapter.getItem(position)).getTitle().toString());
         ((babyAddDialog) addDialog).setItemPosition(position);
+        ((babyAddDialog) addDialog).setItem_ID (((babyItemBase) mAdapter.getItem(position)).mID);
         addDialog.show(getFragmentManager(),"Edit_SumkiItem");
 
     }
-
+*/
     public void editItem (dialogDataReturn s){
         mAdapter.mItems.set(s.getPosition(),new babyItemBase(s.getTitle()));
         this.mAdapter.notifyDataSetChanged();

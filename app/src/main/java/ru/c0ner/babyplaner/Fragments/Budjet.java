@@ -52,11 +52,11 @@ public class Budjet extends babyFragment implements AdapterView.OnItemClickListe
 
     public void onItemClick(AdapterView parent, View v, int position, long id) {
         // Do something in response to the click
-        String str = "Test";
+
         babyItemBase m = (babyItemBase) parent.getAdapter().getItem(position);
-        str = m.getTitle().toString();
+        // str = m.getTitle().toString();
         int Group_ID = m.mGroupID;
-        mItemSelectListiner.ItemSelect(TAG, str, Group_ID);
+        mItemSelectListiner.ItemSelect(TAG, m.getTitle().toString(), Group_ID);
     }
 
     public void setTitle(String title) {
@@ -78,7 +78,8 @@ public class Budjet extends babyFragment implements AdapterView.OnItemClickListe
                 break;
             }
             case R.id.menu_del: {
-                remove(info.position);
+                //remove(info.position);
+                dialogDelete(info.position);
                 //mAdapter.remove(info.position);
                 this.mAdapter.notifyDataSetChanged();
                 break;
@@ -87,19 +88,25 @@ public class Budjet extends babyFragment implements AdapterView.OnItemClickListe
 
         return super.onContextItemSelected(item);
     }
+    /*
     public void dialogAdd(){
         DialogFragment addDialog = new babyAddDialog();
         ((babyAddDialog) addDialog).setTitle("Добавить Элемент");
         addDialog.show(getFragmentManager(),"Add_Budjet");
     }
+    */
+    /*
     public void dialogEdit(int position){
         DialogFragment addDialog = new babyAddDialog();
         ((babyAddDialog) addDialog).setTitle("Редактировать");
         ((babyAddDialog) addDialog).setItems( ((babyItemBase) mAdapter.getItem(position)).getTitle().toString() );
         ((babyAddDialog) addDialog).setItemPosition(position);
+        ((babyAddDialog) addDialog).setItem_ID (((babyItemBase) mAdapter.getItem(position)).mID);
         addDialog.show(getFragmentManager(),"Edit_Budjet");
 
     }
+    */
+
     public void addItem (String s)
     {
 

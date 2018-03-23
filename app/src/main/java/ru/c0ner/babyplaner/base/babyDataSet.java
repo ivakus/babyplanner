@@ -25,6 +25,8 @@ public class babyDataSet {
     public ArrayList mBudjetItems;
     public ArrayList mSumki;
     public ArrayList mSumkiItems;
+    public ArrayList mCurentBudjetItemsList;
+    public ArrayList mCurrentSumkiItemsList;
     public babyDBHelper mDB;
     SQLiteDatabase db;
 
@@ -38,8 +40,8 @@ public class babyDataSet {
             }
 
         }
-
-        return result;
+        mCurrentSumkiItemsList = result;
+        return mCurrentSumkiItemsList;
     }
 
     public void setSumkiItems() {
@@ -59,7 +61,7 @@ public class babyDataSet {
                 // получаем значения по номерам столбцов и пишем все в лог
                 babyItemBase m = new babyItemBase(c.getString(title));
                 m.setParent(c.getInt(parent_id));
-
+                m.mID = c.getInt(id);
                 mSumkiItems.add(m);
                 Log.d("DB-3",
                         "Title  = " + m.getTitle().toString() + "ID = " + m.getParent());
@@ -76,6 +78,8 @@ public class babyDataSet {
         mSumkiItems = new ArrayList<babyItemBase>();
         mBudjetItems = new ArrayList<babyItemBudjet>();
         mBudjetList = new ArrayList<babyItemBase>();
+        mCurentBudjetItemsList = new ArrayList<babyItemBudjet>();
+        mCurrentSumkiItemsList = new ArrayList<babyItemBase>();
         mDB = new babyDBHelper(context);
         db = mDB.getReadableDatabase();
 
@@ -91,16 +95,6 @@ public class babyDataSet {
     }
 
     public void setBudjetItemsList() {
-        //  ArrayList  mB = new ArrayList<babyItemBudjet> ();
-        /*
-        for (int i = 0; i < list.length; i++) {
-            babyItemBase m = new babyItemBudjet(list[i]);
-            m.setParent(parent);
-            mBudjetItems.add(m);
-            //mBudjetItems.add(setBudjetItemsList(mitemlist_budjet[i],i));
-        }
-        */
-
         String[] grp_ID = new String[]{((Integer) 1).toString()};
         Cursor c = db.query("baby_items", null, "Group_ID = ?", grp_ID, null, null, null);
         if (c.moveToFirst()) {
@@ -117,6 +111,7 @@ public class babyDataSet {
                 babyItemBudjet m = new babyItemBudjet(c.getString(title));
                 m.setParent(c.getInt(parent_id));
                 m.setKolvo(c.getInt(kom_vo));
+                m.mID = c.getInt(id);
                 mBudjetItems.add(m);
                 Log.d("DB-3",
                         "Title  = " + m.getTitle().toString() + "ID = " + m.getParent());
@@ -127,15 +122,8 @@ public class babyDataSet {
 
     }
 
-    public void setBudjetList(String[] list) {
-    /*
-        for (int i = 0; i < list.length; i++) {
-            babyItemBase m = new babyItemBase(list[i]);
-            m.mGroupID = i;
-            mBudjetList.add(m);
+    public void setBudjetList() {
 
-        }
-      */
         String[] grp_ID = new String[]{((Integer) 1).toString()};
         Cursor c = db.query("baby_list", null, "Group_ID = ?", grp_ID, null, null, null);
         if (c.moveToFirst()) {
@@ -149,6 +137,7 @@ public class babyDataSet {
                 // получаем значения по номерам столбцов и пишем все в лог
                 babyItemBase m = new babyItemBase(c.getString(title));
                 m.mGroupID = c.getInt(id);
+                m.mID = c.getInt(id);
                 mBudjetList.add(m);
                 Log.d("DB-2",
                         "Title  = " + m.getTitle().toString() + "ID = " + m.mGroupID);
@@ -160,11 +149,11 @@ public class babyDataSet {
 
     }
 
-    public ArrayList getSumkiList() {
+    public ArrayList <babyItemBase> getSumkiList() {
         return mSumki;
     }
 
-    public void setSumkiList(String[] list) {
+    public void setSumkiList() {
 
         String[] grp_ID = new String[]{((Integer) 2).toString()};
         Cursor c = db.query("baby_list", null, "Group_ID = ?", grp_ID, null, null, null);
@@ -179,6 +168,7 @@ public class babyDataSet {
                 // получаем значения по номерам столбцов и пишем все в лог
                 babyItemBase m = new babyItemBase(c.getString(title));
                 m.mGroupID = c.getInt(id);
+                m.mID = c.getInt(id);
                 mSumki.add(m);
                 Log.d("DB-2",
                         "Title  = " + m.getTitle().toString() + "ID = " + m.mGroupID);
@@ -194,7 +184,7 @@ public class babyDataSet {
         return mBudjetList;
     }
 
-    public ArrayList<babyItemBase> getBudjetItemList(int parent) {
+    public ArrayList<babyItemBudjet> getBudjetItemList(int parent) {
         ArrayList result = new ArrayList<>();
         babyItemBudjet bm;
         for (int i = 0; i < mBudjetItems.size(); i++) {
@@ -240,21 +230,50 @@ public class babyDataSet {
     }
 
     public void editBudjetList(dialogDataReturn s) {
-        mBudjetList.set(s.getPosition(), new babyItemBase(s.getTitle()));
+        updateItem("baby_list",s.item_ID,s.getTitle().toString());
+        //queryItem("baby_list",s.item_ID);
+        mBudjetList.set(s.getPosition(), queryItem("baby_list",s.item_ID) );
     }
 
     public void editSumkiList(dialogDataReturn s) {
-        mBudjetItems.set(s.getPosition(), new babyItemBase(s.getTitle()));
+        updateItem("baby_list",s.item_ID,s.getTitle().toString());
+        mSumki.set(s.getPosition(), queryItem("baby_list",s.item_ID));
     }
 
     public void editBudjetItem(dialogDataReturn s) {
-        mSumki.set(s.getPosition(), new babyItemBase(s.getTitle()));
+
+        updateItem("baby_items",s.item_ID,s.getTitle().toString());
+        mBudjetItems.set(s.getPosition(), queryItemBudjet(s.item_ID));
     }
 
     public void editSumkiItem(dialogDataReturn s) {
 
-        mSumkiItems.set(s.getPosition(), new babyItemBase(s.getTitle()));
+        updateItem("baby_items",s.item_ID,s.getTitle().toString());
+        mSumkiItems.set(s.getPosition(), queryItem("baby_items",s.item_ID) );
     }
+
+    public void delBudjetList (int position,int ID) {
+        removeList("baby_list",ID);
+        mBudjetList.remove(position);
+    }
+
+    public void delSumkiList (int position,int ID) {
+             removeList("baby_list",ID);
+             mSumki.remove(position);
+    }
+    public  void delSumkiItemsList (int position, int ID){
+        removeList("baby_items",ID);
+        Object m = mCurrentSumkiItemsList.get(position);
+        mCurrentSumkiItemsList.remove(position);
+        mSumkiItems.remove(m);
+    }
+    public  void delBudjetItemsList (int position, int ID){
+        removeList("baby_items",ID);
+        Object m = mCurentBudjetItemsList.get(position);
+        mCurentBudjetItemsList.remove(position);
+        mBudjetItems.remove(m);
+    }
+
 
     public int insertItem(String table_name, String str, int grp_ID) {
         ContentValues cv = new ContentValues();
@@ -273,5 +292,87 @@ public class babyDataSet {
         long result = db.insert(table_name, null, cv);
         Log.d("DB-Insert", "Title = " + str + "ID = " + result);
         return (int) result;
+    }
+
+    public int updateItem (String table_name, int item_ID, String title)
+    {
+        ContentValues cv = new ContentValues();
+        cv.put("title", title);
+        //cv.put("Group_ID", grp_ID);
+        String[] grp_ID = new String[]{((Integer) item_ID).toString()};
+        long result = db.update(table_name, cv,"ID = ?", grp_ID);
+        Log.d("DB-Update", "Title = " + title + "ID = " + item_ID + "Table = "+table_name);
+        return (int) 0;
+
+    }
+    public babyItemBase queryItem (String table_name, int item_ID){
+
+        babyItemBase m = null;
+        String[] _ID = new String[]{((Integer) item_ID).toString()};
+        Cursor c = db.query(table_name, null, "ID = ?", _ID, null, null, null);
+        if (c.moveToFirst()) {
+            // определяем номера столбцов по имени в выборке
+            int id = c.getColumnIndex("ID");
+            int title = c.getColumnIndex("title");
+            int grp_id = c.getColumnIndex("Group_ID");
+            //int kom_vo = c.getColumnIndex("kol_vo");
+            //int emailColIndex = c.getColumnIndex("email");
+            m = new babyItemBase(c.getString(title));
+            m.setParent(c.getInt(grp_id));
+            //m.setKolvo(c.getInt(kom_vo));
+            m.mID = c.getInt(id);
+            m.mGroupID = c.getInt(grp_id);
+            Log.d("DB-Query-Item",
+                        "Title  = " + m.getTitle().toString() + "ID = " + m.getParent());
+            }
+        else
+            Log.d("DB", "0 rows");
+        c.close();
+        return m;
+    }
+
+    public babyItemBudjet queryItemBudjet (int item_ID){
+
+        babyItemBudjet m = null;
+        String[] _ID = new String[]{((Integer) item_ID).toString()};
+        Cursor c = db.query("baby_items", null, "ID = ?", _ID, null, null, null);
+        if (c.moveToFirst()) {
+            // определяем номера столбцов по имени в выборке
+            int id = c.getColumnIndex("ID");
+            int title = c.getColumnIndex("title");
+            int grp_id = c.getColumnIndex("Group_ID");
+            int price_plan = c.getColumnIndex("price_real");
+            int price_real = c.getColumnIndex("price_plan");
+            int parent_id = c.getColumnIndex("parent_ID");
+            int kom_vo = c.getColumnIndex("kol_vo");
+            //int emailColIndex = c.getColumnIndex("email");
+            m = new babyItemBudjet( c.getString(title), c.getInt(parent_id),c.getInt(price_plan),c.getInt(price_real),c.getInt(kom_vo),0);
+
+            m.setParent(c.getInt(grp_id));
+            //m.setKolvo(c.getInt(kom_vo));
+            m.mID = c.getInt(id);
+            m.mGroupID = c.getInt(grp_id);
+            Log.d("DB-Query-Item-Bu  ",
+                    "Title  = " + m.getTitle().toString() + "I D = " + m.getParent());
+        }
+        else
+            Log.d("DB-Query-Item-Bu", "0 rows");
+        c.close();
+        return m;
+    }
+    public void removeItem (String table_name, int ID)
+    {
+        String[] _ID = new String[]{((Integer) ID).toString()};
+        long res = db.delete(table_name,"ID = ?",_ID);
+        Log.d("DB-Delete-Item",
+                "Title  = ID = " + ID + " Result = " +res);
+    }
+    public void removeList (String table_name, int ID)
+    {
+            String[] _ID = new String[]{((Integer) ID).toString()};
+            db.delete(table_name,"ID = ?",_ID);
+            long res = db.delete ("baby_items","parent_ID = ?",_ID);
+        Log.d("DB-Delete-Item",
+                "Title  = ID = " + ID + " Result = " +res);
     }
 }
