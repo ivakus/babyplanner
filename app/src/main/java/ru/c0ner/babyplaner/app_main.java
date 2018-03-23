@@ -99,6 +99,13 @@ public class app_main extends AppCompatActivity
             ft.replace(R.id.main_conteyner, mBabyItemFragment);
             ft.addToBackStack( mBabyItemFragment.TAG );
         }
+        if (fragmentTag == babyBudjetItem.TAG){
+          babyItemBudjet m = mBabyItemFragment.getItem();
+          mBabyDataSet.editBudjetItem(m);
+
+        }
+
+
        ft.commit();
     }
 //    Интерфейс обработки сообщений из диалогов
@@ -161,6 +168,9 @@ public class app_main extends AppCompatActivity
                   //  bf.mAdapter.notifyDataSetChanged();
                     break;
                 }
+                case babyBudjetItem.TAG : {
+                        bf.editItem(ret);
+                }
             }
             // bf.editItem( (dialogDataReturn) s ) ;
         }
@@ -195,7 +205,8 @@ public class app_main extends AppCompatActivity
                 }
             }
         }
-        bf.mAdapter.notifyDataSetChanged();
+
+     if (bf.getTAG() != babyBudjetItem.TAG)   bf.mAdapter.notifyDataSetChanged();
     }
 
 //    читаем сохраннеые данные из хранилища телефона
