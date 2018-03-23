@@ -14,7 +14,7 @@ android {
         applicationId "ru.c0ner.babyplaner"
         minSdkVersion 15
         targetSdkVersion 26
-        versionCode 6
+        versionCode 7
         versionName "1.19"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }

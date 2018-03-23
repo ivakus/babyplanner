@@ -73,7 +73,8 @@ public class BudjetItems extends babyFragment implements  AdapterView.OnItemClic
         //str = parent.getAdapter().getItem(position).toString();
         babyItemBase m = (babyItemBase) parent.getAdapter().getItem(position);
         str = m.getTitle().toString();
-        Toast.makeText(v.getContext(), str, Toast.LENGTH_SHORT).show();
+      //  Toast.makeText(v.getContext(), str, Toast.LENGTH_SHORT).show();
+        mItemSelectListiner.ItemSelect(TAG, m.getTitle().toString(), position);
 
     }
 
@@ -111,6 +112,7 @@ public class BudjetItems extends babyFragment implements  AdapterView.OnItemClic
         babyItemBudjet m = new babyItemBudjet(s);
         mItemList.add(m);
         Toast.makeText(this.getContext(),s, Toast.LENGTH_SHORT).show();
+        mItemSelectListiner.ItemSelect(TAG, m.getTitle().toString(), mItemList.size()-1);
        // mAdapter.insert(s);
        // this.mAdapter.notifyDataSetChanged();
     }
@@ -130,6 +132,7 @@ public class BudjetItems extends babyFragment implements  AdapterView.OnItemClic
     public void editItem (dialogDataReturn s){
         // super.editItem(s);
         mItemList.set(s.getPosition(),new babyItemBudjet(s.getTitle()));
+        mItemSelectListiner.ItemSelect(TAG, s.getTitle().toString(), s.getPosition());
         //mAdapter.mItems.set(s.getPosition(),new babyItemBase(s.getTitle()));
         this.mAdapter.notifyDataSetChanged();
     }

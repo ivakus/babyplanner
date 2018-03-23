@@ -30,8 +30,10 @@ import ru.c0ner.babyplaner.Fragments.Setting;
 import ru.c0ner.babyplaner.Fragments.Sumki;
 import ru.c0ner.babyplaner.Fragments.SumkiItems;
 import ru.c0ner.babyplaner.Fragments.babyAddDialog;
+import ru.c0ner.babyplaner.Fragments.babyBudjetItem;
 import ru.c0ner.babyplaner.Fragments.babyFragment;
 import ru.c0ner.babyplaner.Fragments.babyItemBase;
+import ru.c0ner.babyplaner.Fragments.babyItemBudjet;
 import ru.c0ner.babyplaner.Fragments.babyStoradge;
 import ru.c0ner.babyplaner.Fragments.dialogDataReturn;
 import ru.c0ner.babyplaner.base.babyDBHelper;
@@ -60,6 +62,7 @@ public class app_main extends AppCompatActivity
     babyStoradge mStor; //хранилище на диске
     FloatingActionButton fab;  //доступ к кнопке
     babyDataSet mBabyDataSet;  //экземпляр кланна для работы с данными, данные храним в памяти для сохранения пишим в базу
+    babyBudjetItem mBabyItemFragment; // экземпляр фрагмента для редоатирования позиция элементов бюджета
 
 
  // Интерфейс обработки событий из фрагментов
@@ -89,6 +92,13 @@ public class app_main extends AppCompatActivity
           readSaveData();
           setUserinfo();
       }
+      if (fragmentTag == BudjetItems.TAG)
+        {
+            fab.setVisibility(View.INVISIBLE);
+            mBabyItemFragment.setItem((babyItemBudjet) mBudjetItems.mAdapter.getItem(array_id));
+            ft.replace(R.id.main_conteyner, mBabyItemFragment);
+            ft.addToBackStack( mBabyItemFragment.TAG );
+        }
        ft.commit();
     }
 //    Интерфейс обработки сообщений из диалогов
@@ -300,6 +310,7 @@ public class app_main extends AppCompatActivity
         mSumkiItems = new SumkiItems();
         mBudjetItems = new BudjetItems();
         mSetting = new Setting();
+        mBabyItemFragment = new babyBudjetItem();
         fm = getSupportFragmentManager();
         readSaveData();
         CreateDataSet();
