@@ -194,8 +194,8 @@ public class babyDataSet {
             }
 
         }
-
-        return result;
+        mCurentBudjetItemsList = result;
+        return mCurentBudjetItemsList;
     }
 
     public void addBudjetList(String s) {
