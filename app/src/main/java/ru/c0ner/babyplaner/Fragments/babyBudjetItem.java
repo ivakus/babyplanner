@@ -2,11 +2,14 @@ package ru.c0ner.babyplaner.Fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 import ru.c0ner.babyplaner.R;
 
@@ -48,18 +51,86 @@ public class babyBudjetItem extends babyFragment implements View.OnClickListener
     }
 
     private void setView() {
+
         mTitle.setText(mItem.getTitle().toString());
         mPrice_real.setText(((Integer)mItem.getPriceReal()).toString());
         mPrice_plan.setText(((Integer)mItem.mPrice_plan).toString());
+
         mKolvo.setText(((Integer)mItem.getKolvo()).toString());
+        mKolvo.setOnClickListener(this);
+        mPrice_plan.setOnClickListener(this);
+        mPrice_real.setOnClickListener(this);
+        mBtn_save.setOnClickListener(this);
 
     }
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.settings_save)
+        if (v.getId() == R.id.budjet_item_kolvo)
         {
+            DialogFragment addDialog = new babyAddDialog();
+            // ((babyAddDialog) addDialog).setTitle("Редактировать");
+            ((babyAddDialog) addDialog).setDialogAction(R.integer.dlg_EDIT);
+            ((babyAddDialog) addDialog).setItems(""+mItem.getKolvo());
+            ((babyAddDialog) addDialog).setItemPosition(R.id.budjet_item_kolvo);
+            ((babyAddDialog) addDialog).setItem_ID(R.id.budjet_item_kolvo);
+            addDialog.show(getFragmentManager(), "BudjetITEM_EDIT");
+        }
+        if (v.getId() == R.id.budjet_item_plan)
+        {
+            DialogFragment addDialog = new babyAddDialog();
+            // ((babyAddDialog) addDialog).setTitle("Редактировать");
+            ((babyAddDialog) addDialog).setDialogAction(R.integer.dlg_EDIT);
+            ((babyAddDialog) addDialog).setItems(""+mItem.getPrice());
+            ((babyAddDialog) addDialog).setItemPosition(R.id.budjet_item_plan);
+            ((babyAddDialog) addDialog).setItem_ID(R.id.budjet_item_plan);
+            addDialog.show(getFragmentManager(), "BudjetITEM_EDIT");
+        }
+        if (v.getId() == R.id.budjet_item_real)
+        {
+            DialogFragment addDialog = new babyAddDialog();
+            // ((babyAddDialog) addDialog).setTitle("Редактировать");
+            ((babyAddDialog) addDialog).setDialogAction(R.integer.dlg_EDIT);
+            ((babyAddDialog) addDialog).setItems(""+mItem.getPriceReal());
+            ((babyAddDialog) addDialog).setItemPosition(R.id.budjet_item_real);
+            ((babyAddDialog) addDialog).setItem_ID(R.id.budjet_item_real);
+            addDialog.show(getFragmentManager(), "BudjetITEM_EDIT");
+        }
+
+        if (v.getId() == R.id.budjet_item_save){
+            mItemList= new ArrayList<babyBudjetItem>();
+            mItem.setKolvo(Integer.parseInt(mKolvo.getText().toString()));
+            mItem.setPrice(Integer.parseInt(mPrice_plan.getText().toString()));
+            mItem.setPriceReal(Integer.parseInt(mPrice_real.getText().toString()));
+
+            mItemSelectListiner.ItemSelect(TAG, mItem.getTitle().toString(),1);
 
         }
+
     }
 
+    @Override
+    public void dialogAdd() {
+        //
+    }
+
+    @Override
+    public void editItem(dialogDataReturn s) {
+        // Integer.parseInt(mDay_do_rodov.getText().toString());
+        if (s.item_ID == R.id.budjet_item_kolvo) {
+            mKolvo.setText(s.getTitle().toString());
+        }
+
+        if (s.item_ID == R.id.budjet_item_plan) {
+            mPrice_plan.setText(s.getTitle().toString());
+        }
+        if (s.item_ID == R.id.budjet_item_real) {
+            mPrice_real.setText(s.getTitle().toString());
+        }
+
+
+    }
+
+    public String getTAG (){
+        return  TAG;
+    }
 }

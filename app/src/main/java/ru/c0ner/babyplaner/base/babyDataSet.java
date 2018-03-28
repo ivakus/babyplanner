@@ -104,6 +104,8 @@ public class babyDataSet {
             int title = c.getColumnIndex("title");
             int parent_id = c.getColumnIndex("parent_ID");
             int kom_vo = c.getColumnIndex("kol_vo");
+            int price_real = c.getColumnIndex("price_real");
+            int price_plan = c.getColumnIndex("price_plan");
             //int emailColIndex = c.getColumnIndex("email");
 
             do {
@@ -112,6 +114,8 @@ public class babyDataSet {
                 m.setParent(c.getInt(parent_id));
                 m.setKolvo(c.getInt(kom_vo));
                 m.mID = c.getInt(id);
+                m.setPrice(c.getInt(price_plan));
+                m.setPriceReal(c.getInt(price_real));
                 mBudjetItems.add(m);
                 Log.d("DB-3",
                         "Title  = " + m.getTitle().toString() + "ID = " + m.getParent());
@@ -202,30 +206,38 @@ public class babyDataSet {
 
         babyItemBase m = new babyItemBase(s, -1, mBudjetList.size());
         int grp_ID = insertItem("baby_list", s, 1);
-        m.mGroupID = grp_ID;
-        mBudjetList.add(m);
+        if (grp_ID >0 ) {m.setID(grp_ID);
+        mBudjetList.add(m);}
 
     }
 
     public void addBudjetItem(String s, int parent) {
 
-        babyItemBudjet m = new babyItemBudjet(s, parent, 0, 0, 1, 0);
-        int grp_ID = insertItem("baby_items", s, 1,parent);
-        mBudjetItems.add(m);
+        babyItemBudjet m = new babyItemBudjet(s);
+        m.setParent(parent);
+        m.setGroupID(1);
+        int item_ID = insertBudjetItem(m);
+        if (item_ID > 0 ) {
+            m.setID(item_ID);
+            mBudjetItems.add(m);}
     }
+
 
 
     public void addSumkiList(String s) {
         babyItemBase m = new babyItemBase(s, -1, mSumki.size());
         int grp_ID = insertItem("baby_list", s, 2);
-        m.mGroupID = grp_ID;
-        mSumki.add(m);
+        if (grp_ID >0 ) { m.setID(grp_ID);
+                            mSumki.add(m);}
     }
 
     public void addsumkiItems(String s, int parent) {
         babyItemBase m = new babyItemBase(s, parent);
         int grp_ID = insertItem("baby_items", s, 2,parent);
-        mSumkiItems.add(m);
+        if (grp_ID >0 ) {
+            m.setID(grp_ID);
+            mSumkiItems.add(m);
+        }
 
     }
 
@@ -245,6 +257,13 @@ public class babyDataSet {
         updateItem("baby_items",s.item_ID,s.getTitle().toString());
         mBudjetItems.set(s.getPosition(), queryItemBudjet(s.item_ID));
     }
+
+    public void editBudjetItem(babyItemBudjet m) {
+
+        updateBudjetItem(m);
+
+    }
+
 
     public void editSumkiItem(dialogDataReturn s) {
 
@@ -291,6 +310,31 @@ public class babyDataSet {
         cv.put("parent_ID",parent);
         long result = db.insert(table_name, null, cv);
         Log.d("DB-Insert", "Title = " + str + "ID = " + result);
+        return (int) result;
+    }
+    public int insertBudjetItem (babyItemBudjet m)
+    {
+        ContentValues cv = new ContentValues();
+        cv.put("title", m.getTitle().toString());
+        cv.put("price_plan",m.getPrice());
+        cv.put("price_real",m.getPriceReal());
+        cv.put("kol_vo",m.getKolvo());
+        cv.put ("Group_ID",1);
+        long result = db.insert("baby_items",null,cv);
+        Log.d("DB-Insert", "Title = " + m.getTitle().toString() + "ID = " + m.mID + "kolvo = "+m.getKolvo());
+        return (int) result;
+    }
+    public int updateBudjetItem (babyItemBudjet m) {
+
+        ContentValues cv = new ContentValues();
+        cv.put("title", m.getTitle().toString());
+        cv.put("price_plan",m.getPrice());
+        cv.put("price_real",m.getPriceReal());
+        cv.put("kol_vo",m.getKolvo());
+        cv.put ("Group_ID",1);
+        String[] grp_ID = new String[]{((Integer) m.mID).toString()};
+        long result = db.update("baby_items",cv,"ID = ?",grp_ID);
+        Log.d("DB-UPDATE BUDJET ", "Title = " + m.getTitle().toString() + "ID = " + m.mID + "kolvo = "+m.getKolvo());
         return (int) result;
     }
 

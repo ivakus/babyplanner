@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import ru.c0ner.babyplaner.R;
 
@@ -26,7 +27,7 @@ public class Setting extends babyFragment implements Button.OnClickListener{
     int mDay = 180;
 
     EditText mUsername;
-    EditText mDay_do_rodov;
+    TextView mDay_do_rodov;
     public final static String TAG = "SettingTAG";
 
     @Override
@@ -35,7 +36,7 @@ public class Setting extends babyFragment implements Button.OnClickListener{
 
         View v = inflater.inflate(R.layout.layout_setting,container,false);
         mUsername = (EditText) v.getRootView().findViewById(R.id.setting_username);
-        mDay_do_rodov = (EditText) v.getRootView().findViewById(R.id.setting_day_do_rodov);
+        mDay_do_rodov = (TextView) v.getRootView().findViewById(R.id.setting_day_do_rodov);
         Button btn = (Button) v.getRootView().findViewById(R.id.settings_save);
         btn.setOnClickListener(this);
         // mStor = new babyStoradge (getContext());

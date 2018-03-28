@@ -270,12 +270,13 @@ public class app_main extends AppCompatActivity
             for (int j = 0 ; j < pod_item.length; j++){
                 // ID , Group_ID integer, title text, parent_ID integer, price_plan integer,price_real integer, kol_vo integer
                 ContentValues cv1 = new ContentValues();
-                cv1.put("title",pod_item[j].toString());
+                String[] _split = pod_item[j].split(":",3);
+                cv1.put("title",_split[0].toString());
                 cv1.put("parent_ID",result);
                 cv1.put("Group_ID",1);
-                cv1.put("price_plan",200);
-                cv1.put("price_real",199);
-                cv1.put("kol_vo",2);
+                cv1.put("price_plan",0);
+                cv1.put("price_real",0);
+                cv1.put("kol_vo",1);
                 long result1 = baby_base.insert("baby_items",null,cv1);
                 Log.d("DB-1", "Title = " + pod_item[j].toString() + "ID = "+result1);
             }

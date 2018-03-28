@@ -68,7 +68,7 @@ public class babyBudjetItemAdapter extends babyAdapter {
             holder = (ViewHolderBudjet) convertView.getTag();
         }
         holder.mTitle.setText(str);
-        holder.mKolvo.setText(( (Integer) m.getKolvo()).toString());
+        holder.mKolvo.setText(( (Integer) m.getPrice()).toString() + " руб.");
         return convertView;
     }
 

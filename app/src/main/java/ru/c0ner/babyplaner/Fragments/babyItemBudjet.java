@@ -13,6 +13,10 @@ public class babyItemBudjet extends babyItemBase {
 
     public babyItemBudjet(String title) {
         super(title);
+        mPrice_plan = 0;
+        mPrice_real = 0;
+        mKolvo = 1;
+        mGoodprice = 0;
 
     }
 
