@@ -271,7 +271,7 @@ public class app_main extends AppCompatActivity
                 // ID , Group_ID integer, title text, parent_ID integer, price_plan integer,price_real integer, kol_vo integer
                 ContentValues cv1 = new ContentValues();
                 String[] _split = pod_item[j].split(":",3);
-                cv1.put("title",_split[0].toString());
+                cv1.put("title",pod_item[j]);//_split[0].toString());
                 cv1.put("parent_ID",result);
                 cv1.put("Group_ID",1);
                 cv1.put("price_plan",0);
