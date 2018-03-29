@@ -109,10 +109,10 @@ public class BudjetItems extends babyFragment implements  AdapterView.OnItemClic
     public void addItem (String s)
     {
         //super.addItem(s);
-        babyItemBudjet m = new babyItemBudjet(s);
-        mItemList.add(m);
-        Toast.makeText(this.getContext(),s, Toast.LENGTH_SHORT).show();
-        mItemSelectListiner.ItemSelect(TAG, m.getTitle().toString(), mItemList.size()-1);
+     //   babyItemBudjet m = new babyItemBudjet(s);
+     //   mItemList.add(m);
+     //   Toast.makeText(this.getContext(),s, Toast.LENGTH_SHORT).show();
+        mItemSelectListiner.ItemSelect(TAG, s, mItemList.size()-1);
        // mAdapter.insert(s);
        // this.mAdapter.notifyDataSetChanged();
     }

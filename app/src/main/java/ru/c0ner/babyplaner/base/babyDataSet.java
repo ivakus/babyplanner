@@ -45,7 +45,7 @@ public class babyDataSet {
     }
 
     public void setSumkiItems() {
-
+       // mSumki.clear();
         String[] grp_ID = new String[]{((Integer) 2).toString()};
         Cursor c = db.query("baby_items", null, "Group_ID = ?", grp_ID, null, null, null);
         if (c.moveToFirst()) {
@@ -158,7 +158,7 @@ public class babyDataSet {
     }
 
     public void setSumkiList() {
-
+        mSumki.clear();
         String[] grp_ID = new String[]{((Integer) 2).toString()};
         Cursor c = db.query("baby_list", null, "Group_ID = ?", grp_ID, null, null, null);
         if (c.moveToFirst()) {
@@ -204,10 +204,12 @@ public class babyDataSet {
 
     public void addBudjetList(String s) {
 
-        babyItemBase m = new babyItemBase(s, -1, mBudjetList.size());
-        int grp_ID = insertItem("baby_list", s, 1);
-        if (grp_ID >0 ) {m.setID(grp_ID);
-        mBudjetList.add(m);}
+
+        int item_ID = insertItem("baby_list", s, 1);
+        if (item_ID > 0 ) {
+            babyItemBase m = queryItem("baby_list",item_ID);
+            //m.setID(grp_ID);
+            mBudjetList.add(m);}
 
     }
 
@@ -319,6 +321,7 @@ public class babyDataSet {
         cv.put("price_plan",m.getPrice());
         cv.put("price_real",m.getPriceReal());
         cv.put("kol_vo",m.getKolvo());
+        cv.put("parent_ID",m.getParent());
         cv.put ("Group_ID",1);
         long result = db.insert("baby_items",null,cv);
         Log.d("DB-Insert", "Title = " + m.getTitle().toString() + "ID = " + m.mID + "kolvo = "+m.getKolvo());

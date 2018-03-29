@@ -43,6 +43,7 @@ public class Budjet extends babyFragment implements AdapterView.OnItemClickListe
         listView.setOnItemClickListener(Budjet.this);
         listView.setAdapter(mAdapter);
         registerForContextMenu(listView);
+
         return v;
     }
 
@@ -55,8 +56,8 @@ public class Budjet extends babyFragment implements AdapterView.OnItemClickListe
 
         babyItemBase m = (babyItemBase) parent.getAdapter().getItem(position);
         // str = m.getTitle().toString();
-        int Group_ID = m.mGroupID;
-        mItemSelectListiner.ItemSelect(TAG, m.getTitle().toString(), Group_ID);
+        int i_ID = m.mID;
+        mItemSelectListiner.ItemSelect(TAG, m.getTitle().toString(), i_ID);
     }
 
     public void setTitle(String title) {

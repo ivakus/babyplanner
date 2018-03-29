@@ -1,6 +1,7 @@
 package ru.c0ner.babyplaner.Fragments;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,7 +69,14 @@ public class babyBudjetItemAdapter extends babyAdapter {
             holder = (ViewHolderBudjet) convertView.getTag();
         }
         holder.mTitle.setText(str);
-        holder.mKolvo.setText(( (Integer) m.getPrice()).toString() + " руб.");
+        if (m.getPriceReal() > 0 ) {
+            if (m.getPrice() > m.getPriceReal() ) {holder.mKolvo.setTextColor(Color.GREEN);}
+            else {holder.mKolvo.setTextColor(Color.RED);}
+
+            holder.mKolvo.setText(( (Integer) m.getPriceReal()).toString() + " руб.");
+
+            }
+        else {holder.mKolvo.setText(( (Integer) m.getPrice()).toString() + " руб.");}
         return convertView;
     }
 

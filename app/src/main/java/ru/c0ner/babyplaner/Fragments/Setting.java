@@ -14,6 +14,11 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 
 import ru.c0ner.babyplaner.R;
@@ -27,10 +32,13 @@ public class Setting extends babyFragment implements View.OnClickListener{
     final String FIRST_START = "FIRST_START";
     boolean isFirst = true;
     final String DAYS_RODOV = "DAYS_RODOV";
+    final String DAYS_RODOV_LONG = "DAYS_RODOV_LONG";
     public babyStoradge mStor;
     String mUser_name = "Гость";
     int mDay = 180;
-    Time time;
+    long mDate_Rodov;
+    Date mDate;
+    SimpleDateFormat f = new SimpleDateFormat("dd.MM.yyyy");
     EditText mUsername;
     TextView mDay_do_rodov;
     public final static String TAG = "SettingTAG";
@@ -45,9 +53,7 @@ public class Setting extends babyFragment implements View.OnClickListener{
         Button btn = (Button) v.getRootView().findViewById(R.id.settings_save);
         btn.setOnClickListener(this);
         mDay_do_rodov.setOnClickListener(this);
-        time = new Time(Time.getCurrentTimezone());
-        time.setToNow();
-        // mStor = new babyStoradge (getContext());
+       // mStor = new babyStoradge (getContext());
         ReadData();
         return v;
     }
@@ -58,16 +64,26 @@ public class Setting extends babyFragment implements View.OnClickListener{
         if (!isFirst){
             mUser_name = mStor.getDataString(USER_NAME);
             mDay = mStor.getDataInt(DAYS_RODOV);
+            mDate_Rodov = mStor.getDataLong(DAYS_RODOV_LONG);
         }
         mUsername.setText(mUser_name);
         // mDay_do_rodov.setText(""+mDay);
-        mDay_do_rodov.setText(" " + time.weekDay + "." + time.month + "." + time.year);
+        //time = new Date();
+        if (mDate_Rodov > 0) {
+            mDate = new Date(mDate_Rodov);
+        }
+        else {
+          mDate = new Date();
+        }
+
+        mDay_do_rodov.setText(" " + f.format(mDate));
     }
     public void SaveDada (){
 
         mStor.addData(FIRST_START,false);
         mStor.addData(USER_NAME,mUser_name);
         mStor.addData(DAYS_RODOV,mDay);
+        mStor.addData(DAYS_RODOV_LONG,mDate.getTime());
     }
 
 
@@ -84,8 +100,12 @@ public class Setting extends babyFragment implements View.OnClickListener{
 
         }
         if (v.getId() == R.id.setting_day_do_rodov) {
+            Calendar c_ = new GregorianCalendar();
+            int mm = mDate.getMonth();
+            int yy = mDate.getYear()+1900;
+            int dd = mDate.getDay();
+            DatePickerDialog tpd = new DatePickerDialog(getContext(), myCallBack, yy,mm,dd);
 
-            DatePickerDialog tpd = new DatePickerDialog(getContext(), myCallBack, time.year, time.month,time.monthDay);
             tpd.show();
 
         }
@@ -98,7 +118,14 @@ public class Setting extends babyFragment implements View.OnClickListener{
             int myYear = year;
             int myMonth = monthOfYear;
             int myDay = dayOfMonth;
-            mDay_do_rodov.setText(" " + myDay + "/" + myMonth + "/" + myYear);
+            //time.set(myDay,myMonth,myYear);
+            Calendar c_ = new GregorianCalendar(myYear,myMonth,myDay);
+            mDate.setTime(c_.getTimeInMillis());
+            mDay_do_rodov.setText(" "+ f.format(mDate) );
+
+
+           // time.set(myDay,myMonth,myYear);
+          //mDay = time.getTime();
         }
     };
 }

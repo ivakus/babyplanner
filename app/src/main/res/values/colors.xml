@@ -5,4 +5,6 @@
     <color name="colorAccent">#25c9ab</color>
     <color name="colorTitle">#efd038</color>
     <color name="ic_backgraund"></color>
+    <color name="list_red">#ef4738</color>
+    <color name="list_green">#318e0a</color>
 </resources>

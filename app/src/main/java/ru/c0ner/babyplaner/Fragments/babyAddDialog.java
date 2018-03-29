@@ -18,6 +18,8 @@ import android.widget.Toast;
 
 import ru.c0ner.babyplaner.R;
 
+import static android.text.InputType.TYPE_CLASS_TEXT;
+
 /**
  * Created by d.ivaka on 14.03.2018.
  */
@@ -29,6 +31,12 @@ public class babyAddDialog extends DialogFragment implements DialogInterface.OnC
     public EditText et;
     public String mTitle;
     public int item_ID = 0;
+
+    public void setType_metod(int type_metod) {
+        this.type_metod = type_metod;
+    }
+
+    int type_metod = TYPE_CLASS_TEXT;
 
     public void setDialogAction(int dialogAction) {
         this.dialogAction = dialogAction;
@@ -90,6 +98,7 @@ public class babyAddDialog extends DialogFragment implements DialogInterface.OnC
         TextView tw = v.findViewById(R.id.dialog_add_title);
         //tw.setText(mTitle);
         et.setText(mItems);
+        et.setInputType(type_metod);
         builder.setView(v);
         builder.setNegativeButton(R.string.str_otmena,this);
 

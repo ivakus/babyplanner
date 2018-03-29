@@ -23,6 +23,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import ru.c0ner.babyplaner.Fragments.Budjet;
 import ru.c0ner.babyplaner.Fragments.BudjetItems;
@@ -47,7 +49,9 @@ public class app_main extends AppCompatActivity
     final String FIRST_START = "FIRST_START"; //ключ для доступа в хранилице для параметра первый запуск
     boolean isFirst = true;  // сюда загружаем данные из хранилища, параметр первый запуск
     final String DAYS_RODOV = "DAYS_RODOV";  //ключ для доступа в хранилище , параметр дата родов
+    final String DAYS_RODOV_LONG = "DAYS_RODOV_LONG";
 
+    long mDate_rodov; // дата родов в милиисекундах
     int days_rodov_int = 180;   //храним данные по дате родов для обновления прогресс бара в навигационном меню
     String mUser_name = "Гость";  // тут храним имя пользователя
     Budjet budjet;    //фрагмент обрабатывающий список бюджетов
@@ -95,7 +99,7 @@ public class app_main extends AppCompatActivity
       if (fragmentTag == BudjetItems.TAG)
         {
             fab.setVisibility(View.INVISIBLE);
-            mBabyItemFragment.setItem((babyItemBudjet) mBudjetItems.mAdapter.getItem(array_id));
+            mBabyItemFragment.setItem((babyItemBudjet) mBudjetItems.mItemList.get(array_id));
             ft.replace(R.id.main_conteyner, mBabyItemFragment);
             ft.addToBackStack( mBabyItemFragment.TAG );
         }
@@ -129,6 +133,11 @@ public class app_main extends AppCompatActivity
                     // String str = ""+ ((dialogDataReturn)s).getTitle() + ((BudjetItems) bf).getCurent_Group_ID();
                     // Toast.makeText(this,str, Toast.LENGTH_SHORT).show();
                     mBabyDataSet.addBudjetItem(ret.getTitle(), ((BudjetItems) bf).getCurent_Group_ID());
+
+
+                   ((BudjetItems) bf).setItemList(mBabyDataSet.getBudjetItemList(((BudjetItems) bf).getCurent_Group_ID()));
+                   // ((BudjetItems) bf).mAdapter.notifyDataSetChanged();
+
                     ((BudjetItems) bf).addItem(ret.getTitle());
                     //((BudjetItems) bf).mAdapter.notifyDataSetChanged();
                     break;
@@ -223,7 +232,10 @@ public class app_main extends AppCompatActivity
         // createSQLBase();
         // заполняем поля имя пользователя и дату родов
         mUser_name = mStor.getDataString(USER_NAME);
-        days_rodov_int = mStor.getDataInt(DAYS_RODOV);
+        mDate_rodov = mStor.getDataLong(DAYS_RODOV_LONG);
+        Date cur = new Date();
+        days_rodov_int = (int) TimeUnit.MILLISECONDS.toDays(mDate_rodov-cur.getTime()+1);
+
         Toast.makeText(getApplicationContext(), "Здраствуйте,"+mUser_name+" !", Toast.LENGTH_SHORT).show();
     }
 
@@ -298,9 +310,9 @@ public class app_main extends AppCompatActivity
                 cv1.put("title",pod_item[j].toString());
                 cv1.put("parent_ID",result);
                 cv1.put("Group_ID",2);
-                cv1.put("price_plan",200);
-                cv1.put("price_real",199);
-                cv1.put("kol_vo",2);
+                cv1.put("price_plan",0);
+                cv1.put("price_real",0);
+                cv1.put("kol_vo",1);
                 long result1 = baby_base.insert("baby_items",null,cv1);
                 Log.d("DB-1", "Title = " + pod_item[j].toString() + "ID = "+result1);
             }
@@ -312,7 +324,11 @@ public class app_main extends AppCompatActivity
     public void setUserinfo(){
         twUser_Name.setText(mUser_name);
         mDays_rodov.setText(""+days_rodov_int);
-        mMenu_progress.setProgress(days_rodov_int);
+        //Date d = new Date();
+        //long d_l = d.getTime();
+        //d_l = days_rodov_int - d_l;
+
+        mMenu_progress.setProgress((int)(mMenu_progress.getMax()-days_rodov_int));
     }
     protected void babyInit (){
 

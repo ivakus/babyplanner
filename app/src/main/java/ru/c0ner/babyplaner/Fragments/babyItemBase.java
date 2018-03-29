@@ -5,10 +5,10 @@ package ru.c0ner.babyplaner.Fragments;
  */
 
 public class babyItemBase {
-    public String mTitle;
-    public int mParent;
-    public int mGroupID;
-    public int mID;
+    public String mTitle; // название
+    public int mParent; // ID родителя если нет -1
+    public int mGroupID; // ID списка
+    public int mID; // собственный ID онже используется как ID парент для подсписка.
 
     public babyItemBase(String title) {
         mTitle = title;
@@ -40,10 +40,11 @@ public class babyItemBase {
         mParent = parent;
     }
 
-    public babyItemBase(String title, int parent,int Groupe_id) {
+    public babyItemBase(String title, int parent,int item_id) {
         mTitle = title;
         mParent = parent;
-        mGroupID = Groupe_id;
+        mID = item_id;
+        mGroupID=mID;
     }
     public String getTitle() {
         return mTitle;

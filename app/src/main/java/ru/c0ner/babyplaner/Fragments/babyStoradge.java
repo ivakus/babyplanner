@@ -45,6 +45,14 @@ public class babyStoradge {
         editor.commit();
         return true;
     }
+    public  boolean addData( String name, long value ){
+        if( settings == null ){
+            return false;
+        }
+        editor.putLong( name, value );
+        editor.commit();
+        return true;
+    }
     public  String getDataString( String name ){
         if( settings == null ){
             return "";
@@ -64,5 +72,12 @@ public class babyStoradge {
             return -1;
         }
         return settings.getInt( name,-1);
+    }
+
+    public  long getDataLong( String name ){
+        if( settings == null ){
+            return 0;
+        }
+        return settings.getLong( name,0);
     }
 }

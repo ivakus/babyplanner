@@ -13,6 +13,8 @@ import java.util.ArrayList;
 
 import ru.c0ner.babyplaner.R;
 
+import static android.text.InputType.TYPE_CLASS_NUMBER;
+
 /**
  * Created by d.ivaka on 23.03.2018.
  */
@@ -73,6 +75,7 @@ public class babyBudjetItem extends babyFragment implements View.OnClickListener
             ((babyAddDialog) addDialog).setItems(""+mItem.getKolvo());
             ((babyAddDialog) addDialog).setItemPosition(R.id.budjet_item_kolvo);
             ((babyAddDialog) addDialog).setItem_ID(R.id.budjet_item_kolvo);
+            ((babyAddDialog) addDialog).setType_metod(TYPE_CLASS_NUMBER);
             addDialog.show(getFragmentManager(), "BudjetITEM_EDIT");
         }
         if (v.getId() == R.id.budjet_item_plan)
@@ -83,6 +86,7 @@ public class babyBudjetItem extends babyFragment implements View.OnClickListener
             ((babyAddDialog) addDialog).setItems(""+mItem.getPrice());
             ((babyAddDialog) addDialog).setItemPosition(R.id.budjet_item_plan);
             ((babyAddDialog) addDialog).setItem_ID(R.id.budjet_item_plan);
+            ((babyAddDialog) addDialog).setType_metod(TYPE_CLASS_NUMBER);
             addDialog.show(getFragmentManager(), "BudjetITEM_EDIT");
         }
         if (v.getId() == R.id.budjet_item_real)
@@ -93,12 +97,13 @@ public class babyBudjetItem extends babyFragment implements View.OnClickListener
             ((babyAddDialog) addDialog).setItems(""+mItem.getPriceReal());
             ((babyAddDialog) addDialog).setItemPosition(R.id.budjet_item_real);
             ((babyAddDialog) addDialog).setItem_ID(R.id.budjet_item_real);
+            ((babyAddDialog) addDialog).setType_metod(TYPE_CLASS_NUMBER);
             addDialog.show(getFragmentManager(), "BudjetITEM_EDIT");
         }
 
         if (v.getId() == R.id.budjet_item_save){
             mItemList= new ArrayList<babyBudjetItem>();
-            mItem.setKolvo(Integer.parseInt(mKolvo.getText().toString()));
+            //mItem.setKolvo(Integer.parseInt(mKolvo.getText().toString()));
             mItem.setPrice(Integer.parseInt(mPrice_plan.getText().toString()));
             mItem.setPriceReal(Integer.parseInt(mPrice_real.getText().toString()));
 
@@ -117,7 +122,14 @@ public class babyBudjetItem extends babyFragment implements View.OnClickListener
     public void editItem(dialogDataReturn s) {
         // Integer.parseInt(mDay_do_rodov.getText().toString());
         if (s.item_ID == R.id.budjet_item_kolvo) {
-            mKolvo.setText(s.getTitle().toString());
+            try {
+                mItem.setKolvo(Integer.parseInt(s.getTitle().toString()));
+            }
+            catch (NumberFormatException e) {
+                //Will Throw exception!
+                //do something! anything to handle the exception.
+            }
+            mKolvo.setText(""+mItem.mKolvo);
         }
 
         if (s.item_ID == R.id.budjet_item_plan) {
