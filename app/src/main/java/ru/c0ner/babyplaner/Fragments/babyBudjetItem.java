@@ -122,21 +122,22 @@ public class babyBudjetItem extends babyFragment implements View.OnClickListener
     public void editItem(dialogDataReturn s) {
         // Integer.parseInt(mDay_do_rodov.getText().toString());
         if (s.item_ID == R.id.budjet_item_kolvo) {
-            try {
-                mItem.setKolvo(Integer.parseInt(s.getTitle().toString()));
+            if ( s.getTitle().length()>0 ) {
+                try {
+                    mItem.setKolvo(Integer.parseInt(s.getTitle().toString()));
+                } catch (NumberFormatException e) {
+                    //Will Throw exception!
+                    //do something! anything to handle the exception.
+                }
+                mKolvo.setText("" + mItem.mKolvo);
             }
-            catch (NumberFormatException e) {
-                //Will Throw exception!
-                //do something! anything to handle the exception.
-            }
-            mKolvo.setText(""+mItem.mKolvo);
         }
 
         if (s.item_ID == R.id.budjet_item_plan) {
-            mPrice_plan.setText(s.getTitle().toString());
+            if ( s.getTitle().length()>0 ) {mPrice_plan.setText(s.getTitle().toString());}
         }
         if (s.item_ID == R.id.budjet_item_real) {
-            mPrice_real.setText(s.getTitle().toString());
+            if ( s.getTitle().length()>0 ) {mPrice_real.setText(s.getTitle().toString());}
         }
 
 
